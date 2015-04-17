@@ -1,0 +1,110 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (javaClasses.cpp:129), pid=6196, tid=6900
+#  fatal error: Invalid layout of preloaded class
+#
+# JRE version: 7.0_13-b20
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (23.7-b01 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000000000243e800):  JavaThread "Unknown thread" [_thread_in_vm, id=6900, stack(0x00000000022f0000,0x00000000023f0000)]
+
+Stack: [0x00000000022f0000,0x00000000023f0000]
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x000000000243e800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=6900, stack(0x00000000022f0000,0x00000000023f0000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (10 events):
+Event: 0.341 loading class 0x0000000002488dd0 done
+Event: 0.342 loading class 0x0000000002488ce0 done
+Event: 0.342 loading class 0x0000000002488bf0
+Event: 0.342 loading class 0x0000000002490bf0
+Event: 0.342 loading class 0x0000000002490bf0 done
+Event: 0.342 loading class 0x0000000002490c30
+Event: 0.342 loading class 0x0000000002490c30 done
+Event: 0.342 loading class 0x00000000098de530
+Event: 0.342 loading class 0x00000000098de530 done
+Event: 0.342 loading class 0x0000000002488bf0 done
+
+
+Dynamic libraries:
+0x000007f686160000 - 0x000007f686193000 	E:\ProfessionalTools\JDK1.7_64bit_InstallContent\bin\javaw.exe
+0x000007fb6d160000 - 0x000007fb6d31e000 	C:\windows\SYSTEM32\ntdll.dll
+0x000007fb6a620000 - 0x000007fb6a756000 	C:\windows\system32\KERNEL32.DLL
+0x000007fb6a110000 - 0x000007fb6a203000 	C:\windows\system32\KERNELBASE.dll
+0x000007fb6ca50000 - 0x000007fb6cb2e000 	C:\windows\system32\ADVAPI32.dll
+0x000007fb6c8b0000 - 0x000007fb6c9fc000 	C:\windows\system32\USER32.dll
+0x000007fb690d0000 - 0x000007fb69339000 	C:\windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9200.16384_none_418c2a697189c07f\COMCTL32.dll
+0x000007fb6cd50000 - 0x000007fb6cdf5000 	C:\windows\system32\msvcrt.dll
+0x000007fb6ca00000 - 0x000007fb6ca48000 	C:\windows\SYSTEM32\sechost.dll
+0x000007fb6b0a0000 - 0x000007fb6b1e5000 	C:\windows\system32\RPCRT4.dll
+0x000007fb6aed0000 - 0x000007fb6b011000 	C:\windows\system32\GDI32.dll
+0x000007fb6a5e0000 - 0x000007fb6a619000 	C:\windows\system32\IMM32.DLL
+0x000007fb6a9f0000 - 0x000007fb6ab04000 	C:\windows\system32\MSCTF.dll
+0x0000000076880000 - 0x0000000076951000 	E:\ProfessionalTools\JDK1.7_64bit_InstallContent\jre\bin\msvcr100.dll
+0x0000000076be0000 - 0x00000000772ff000 	E:\ProfessionalTools\JDK1.7_64bit_InstallContent\jre\bin\server\jvm.dll
+0x000007fb63020000 - 0x000007fb63029000 	C:\windows\SYSTEM32\WSOCK32.dll
+0x000007fb60dd0000 - 0x000007fb60df0000 	C:\windows\SYSTEM32\WINMM.dll
+0x000007fb6ce60000 - 0x000007fb6ce67000 	C:\windows\system32\PSAPI.DLL
+0x000007fb6c850000 - 0x000007fb6c8a8000 	C:\windows\system32\WS2_32.dll
+0x000007fb60d90000 - 0x000007fb60dc2000 	C:\windows\SYSTEM32\WINMMBASE.dll
+0x000007fb6cf40000 - 0x000007fb6cf49000 	C:\windows\system32\NSI.dll
+0x0000000076af0000 - 0x0000000076aff000 	E:\ProfessionalTools\JDK1.7_64bit_InstallContent\jre\bin\verify.dll
+0x0000000076ac0000 - 0x0000000076ae8000 	E:\ProfessionalTools\JDK1.7_64bit_InstallContent\jre\bin\java.dll
+0x0000000076840000 - 0x0000000076875000 	E:\ProfessionalTools\JDK1.7_64bit_InstallContent\jre\bin\jdwp.dll
+0x0000000076830000 - 0x0000000076838000 	E:\ProfessionalTools\JDK1.7_64bit_InstallContent\jre\bin\npt.dll
+0x0000000076aa0000 - 0x0000000076ab5000 	E:\ProfessionalTools\JDK1.7_64bit_InstallContent\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:50355 -Dfile.encoding=GBK -Xbootclasspath:D:\Android_SdkInstallContent\platforms\android-20\android.jar 
+java_command: com.model.CloudSendHelper
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=E:\ProfessionalTools\JDK1.7_64bit_InstallContent
+CLASSPATH=.;E:\ProfessionalTools\JDK1.7_64bit_InstallContent\lib\dt.jar;E:\ProfessionalTools\JDK1.7_64bit_InstallContent\lib\tools.jar;
+PATH=E:\ProfessionalTools\JDK1.7_64bit_InstallContent\jre\bin;E:/ProfessionalTools/JDK1.7_64bit_InstallContent/bin/../jre/bin/server;E:/ProfessionalTools/JDK1.7_64bit_InstallContent/bin/../jre/bin;E:/ProfessionalTools/JDK1.7_64bit_InstallContent/bin/../jre/lib/amd64;E:\ProfessionalTools\JDK1.7_64bit_InstallContent\bin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;D:\Android_SdkInstallContent\platform-tools;D:\Android_SdkInstallContent\tools;D:\Nodejs_InstallContent\;D:\SVN_InstallContent\bin;D:\Subversion_InstallConten\bin;D:\PHP\mysql-5.6.23-winx64\mysql-5.6.23-winx64\bin;D:\PHP\php-5.6.6-Win32-VC11-x64;D:\PHP\php-5.6.6-Win32-VC11-x64\ext;E:\SQLlite\sqlite-shell-win32-x86-3080803;C:\Users\wcj\AppData\Roaming\npm;D:\apache-ant-1.9.4;;E:\ProfessionalTools\eclipse-j2ee-64\eclipse;
+USERNAME=wcj
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 18 Model 1 Stepping 0, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 8 , 64 bit Build 9200 
+
+CPU:total 4 (4 cores per cpu, 1 threads per core) family 18 model 1 stepping 0, cmov, cx8, fxsr, mmx, sse, sse2, sse3, popcnt, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit, tscinv
+
+Memory: 4k page, physical 5740652k(2733492k free), swap 11507820k(7246244k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (23.7-b01) for windows-amd64 JRE (1.7.0_13-b20), built on Jan 30 2013 10:10:00 by "java_re" with unknown MS VC++:1600
+
+time: Tue Apr 14 13:27:49 2015
+elapsed time: 0 seconds
+

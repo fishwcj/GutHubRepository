@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- author:LLL -->
+<!-- Time:3.31 -->
+<!-- content:将string分类 -->
+<!-- 添加记账界面中的text -->
+
+<resources>
+
+    <!-- project -->
+    <string name="app_name">YYYY</string>
+    <string name="title_activity_ys_">YS_Activity</string>
+
+    <!-- 记账 -->
+
+    <string name="remain_this_month">本月预算余额：</string>
+    <string name="income">收入</string>
+    <string name="payout">支出</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="zero">0</string>
+    <string name="point">.</string>
+    <string name="clear">c</string>
+    <string name="type_consume">默认类别：食</string>
+    <string name="budget_set">设置预算</string>
+    <string name="clothes1">衣--人是衣妆</string>
+    <string name="eat1">食--酒足饭饱</string>
+    <string name="house1">住--斯是陋室</string>
+    <string name="walk1">行--踏破铁鞋</string>
+        <string name="clothes">衣</string>
+    <string name="eat">食</string>
+    <string name="house">住</string>
+    <string name="walk">行</string>
+    <string name="write_this_point">记下这一笔</string>
+
+    <!-- 预算 -->
+
+    <string name="total_ys">总预算</string>
+    <string name="other">其他</string>
+    <string name="total">总预算</string>
+    <string name="back">设置完成</string>
+    <string name="sure">确定</string>
+    <string name="ys_init">0</string>
+
+</resources>
