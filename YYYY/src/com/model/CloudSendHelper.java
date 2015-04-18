@@ -5,7 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.HttpURLConnection;
+//import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -41,6 +41,7 @@ public class CloudSendHelper {
 		currentString = format.format(new Date());
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM");
 		currentStringShort = format1.format(new Date());
+		cloudData.setDate(currentStringShort);
 	}
 
 	/**
@@ -103,8 +104,6 @@ public class CloudSendHelper {
 		}.start();
 		tag = true;
 		return tag;
-
-
 	}
 
 	/**

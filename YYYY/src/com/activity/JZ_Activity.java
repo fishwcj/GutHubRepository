@@ -61,6 +61,7 @@ public class JZ_Activity extends Activity {
 	private int consumekind = 2; // 消费类别参数（默认为食）
 	private ArrayList<String> kindList = new ArrayList<String>();
 	SQLiteDatabase db;
+	public static Activity jzActivity;
 
 	@Override
 	protected void onDestroy() {
@@ -80,6 +81,7 @@ public class JZ_Activity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jz);
+		jzActivity = this;
 		System.out.println("JZ被创建");
 		System.out.println("JZ线程:" + Thread.currentThread().getId());
 		/**

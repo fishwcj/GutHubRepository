@@ -13,8 +13,27 @@ public class CloudData implements Serializable {
 	private float budgetRemain;	//本月预算余额
 	private float budget;		//本月预算
 	private float income;	//收入
+	private String date;	//同步日期
 	private ArrayList<String> budgetByKindList = new ArrayList<String>();	//本月分类预算
 	private ArrayList<String> streamCountList = new ArrayList<String>();	//新增流水信息
+	
+	
+	/**
+	 * 得到日期
+	 * @return
+	 */
+	public String getDate() {
+		return date;
+	}
+
+	/**
+	 * 设置日期
+	 * @param date
+	 */
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
 	
 	/**
 	 * 得到用户名

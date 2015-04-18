@@ -8,6 +8,8 @@ import java.util.List;
 
 
 
+
+
 //import com.yyyy.yyyy.Index_Activity.MyAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dao.DataBase;
+import com.dao.JZ_DataBaseHelper;
 import com.model.Index_ContorlHelper;
 import com.model.Init;
 import com.yyyy.yyyy.R;
@@ -37,7 +40,7 @@ public class Index_Activity extends Activity {
 	@SuppressWarnings("unused")
 	private PagerTitleStrip pagerTitleStrip;
 	private List<View> views;
-
+	public static Activity indexActivity;
 	LocalActivityManager manager = null;
 	// 打开数据库
 	DataBase dataBase;
@@ -52,9 +55,9 @@ public class Index_Activity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		if (SIGN != 0) {
-			Index_ContorlHelper index_ContorlHelper = new Index_ContorlHelper(
-					manager, dataBase);
-			index_ContorlHelper.updateBudgetRemain();
+			//更新记账界面预算显示
+			JZ_DataBaseHelper jz_DataBaseHelper = new JZ_DataBaseHelper();
+			jz_DataBaseHelper.updateBudgetRemain(dataBase);
 			System.out.println("调用了resum");
 		}
 		SIGN++;
@@ -64,12 +67,14 @@ public class Index_Activity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_index);
+		context = Index_Activity.this;
+		indexActivity = this;
 		manager = new LocalActivityManager(this, true);
 		dataBase = new DataBase(Index_Activity.this, "user.db");
 		manager.dispatchCreate(savedInstanceState);
 		// 获得监听对象
-		index_ContorlHelper = new Index_ContorlHelper(manager, dataBase);
-		context = Index_Activity.this;
+		index_ContorlHelper = new Index_ContorlHelper(Index_Activity.this, dataBase);
+//		context = Index_Activity.this;
 		// 获得viewPager
 		viewPager = (ViewPager) this.findViewById(R.id.viewpager);
 
@@ -93,6 +98,7 @@ public class Index_Activity extends Activity {
 		views.add(streamView);
 		viewPager.setAdapter(new MyAdapter());
 		try {
+			@SuppressWarnings("unused")
 			Init init = new Init(context);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

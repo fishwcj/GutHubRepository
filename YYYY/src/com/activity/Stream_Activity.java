@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.yyyy.yyyy.R;
 
 public class Stream_Activity extends Activity {
-
+	public static Activity streamActivity;
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -17,6 +17,7 @@ public class Stream_Activity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stream);
+		streamActivity = this;
 		System.out.println("Stream±»´´½¨");
 	}
 }

@@ -4,10 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.activity.JZ_Activity;
+//import com.activity.JZ_Activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+//import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 

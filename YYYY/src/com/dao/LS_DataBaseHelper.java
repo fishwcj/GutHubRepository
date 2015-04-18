@@ -1,19 +1,20 @@
 package com.dao;
 
-import android.app.Activity;
+//import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class LS_DataBaseHelper {
-	Activity manager;
-	// 数据库对象
+	Context context;
 	DataBase dataBase;
-	// 流水表名 test1
-	String tableNameString = "test1";
+	String tableNameString = "test1";	// 流水表名 test1
 	
-	public LS_DataBaseHelper(Activity manager, DataBase dataBase){
+	public LS_DataBaseHelper(Context context, DataBase dataBase){
 		this.dataBase = dataBase;
-		this.manager = manager;
+//		this.manager = manager;
+		this.context  = context;
+		
 	}
 	
 	
