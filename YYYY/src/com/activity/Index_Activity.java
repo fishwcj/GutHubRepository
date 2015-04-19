@@ -43,7 +43,7 @@ public class Index_Activity extends Activity {
 	public static Activity indexActivity;
 	LocalActivityManager manager = null;
 	// 打开数据库
-	DataBase dataBase;
+	public static DataBase dataBase;
 	
 	//第一次启动，SIGN = 0;标志位
 	static int SIGN = 0;
@@ -74,19 +74,10 @@ public class Index_Activity extends Activity {
 		manager.dispatchCreate(savedInstanceState);
 		// 获得监听对象
 		index_ContorlHelper = new Index_ContorlHelper(Index_Activity.this, dataBase);
-//		context = Index_Activity.this;
 		// 获得viewPager
 		viewPager = (ViewPager) this.findViewById(R.id.viewpager);
 
 		views = new ArrayList<View>();
-
-		Intent intent_streetIntent = new Intent(context, Street_Activity.class);
-		intent_streetIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		views.add(getView("Street_Activity", intent_streetIntent));
-
-		Intent intent_countIntent = new Intent(context, Count_Activity.class);
-		intent_countIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		views.add(getView("Count_Activity", intent_countIntent));
 
 		Intent intent_jzIntent = new Intent(context, JZ_Activity.class);
 		intent_jzIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -96,6 +87,15 @@ public class Index_Activity extends Activity {
 		intent_streamIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		View streamView = getView("Stream_Activity", intent_streamIntent);
 		views.add(streamView);
+		
+		Intent intent_countIntent = new Intent(context, Count_Activity.class);
+		intent_countIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		views.add(getView("Count_Activity", intent_countIntent));
+		
+		//更新记账界面预算显示
+		JZ_DataBaseHelper jz_DataBaseHelper = new JZ_DataBaseHelper();
+		jz_DataBaseHelper.updateBudgetRemain(dataBase);
+		
 		viewPager.setAdapter(new MyAdapter());
 		try {
 			@SuppressWarnings("unused")

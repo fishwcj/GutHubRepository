@@ -34,11 +34,13 @@
     <string name="eat1">食--酒足饭饱</string>
     <string name="house1">住--斯是陋室</string>
     <string name="walk1">行--踏破铁鞋</string>
-        <string name="clothes">衣</string>
+    <string name="clothes">衣</string>
     <string name="eat">食</string>
     <string name="house">住</string>
     <string name="walk">行</string>
     <string name="write_this_point">记下这一笔</string>
+    <string name="lastyear">上一年</string>
+    <string name="nextyear">下一年</string>
 
     <!-- 预算 -->
 
