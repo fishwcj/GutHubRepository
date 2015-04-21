@@ -24,6 +24,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,7 +82,7 @@ public class JZ_Activity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_jz);
+		setContentView(R.layout.activity_jz1);
 		jzActivity = this;
 		System.out.println("JZ被创建");
 		System.out.println("JZ线程:" + Thread.currentThread().getId());
@@ -105,33 +107,33 @@ public class JZ_Activity extends Activity {
 		number_clear = (Button) this.findViewById(R.id.number_clear);
 		button_ok = (Button) this.findViewById(R.id.ok);
 		// 测试按钮
-		syButton = (Button) this.findViewById(R.id.sy);
+		// syButton = (Button) this.findViewById(R.id.sy);
+		//
+		// // yiTextView = (TextView) this.findViewById(R.id.yi);
+		// // shiTextView = (TextView) this.findViewById(R.id.shi);
+		// // zhuTextView = (TextView) this.findViewById(R.id.zhu);
+		// // xingTextView = (TextView) this.findViewById(R.id.xing);
+		// // kind = (TextView) this.findViewById(R.id.kind);
 
-		yiTextView = (TextView) this.findViewById(R.id.yi);
-		shiTextView = (TextView) this.findViewById(R.id.shi);
-		zhuTextView = (TextView) this.findViewById(R.id.zhu);
-		xingTextView = (TextView) this.findViewById(R.id.xing);
-		kind = (TextView) this.findViewById(R.id.kind);
-
-		Drawable drawable = getResources().getDrawable(R.drawable.button);
-		Drawable drawable2 = getResources().getDrawable(R.drawable.radius);
-		number_0.setBackground(drawable);
-		number_1.setBackground(drawable);
-		number_2.setBackground(drawable);
-		number_3.setBackground(drawable);
-		number_4.setBackground(drawable);
-		number_5.setBackground(drawable);
-		number_6.setBackground(drawable);
-		number_7.setBackground(drawable);
-		number_8.setBackground(drawable);
-		number_9.setBackground(drawable);
-		number_float.setBackground(drawable);
-		number_clear.setBackground(drawable);
-		button_ok.setBackground(drawable);
-		// 测试按钮
-		syButton.setBackground(drawable);
-
-		consume.setBackground(drawable2);
+//		Drawable drawable = getResources().getDrawable(R.drawable.button);
+//		Drawable drawable2 = getResources().getDrawable(R.drawable.radius);
+//		number_0.setBackground(drawable);
+//		number_1.setBackground(drawable);
+//		number_2.setBackground(drawable);
+//		number_3.setBackground(drawable);
+//		number_4.setBackground(drawable);
+//		number_5.setBackground(drawable);
+//		number_6.setBackground(drawable);
+//		number_7.setBackground(drawable);
+//		number_8.setBackground(drawable);
+//		number_9.setBackground(drawable);
+//		number_float.setBackground(drawable);
+//		number_clear.setBackground(drawable);
+//		button_ok.setBackground(drawable);
+//		// 测试按钮
+//		// syButton.setBackground(drawable);
+//
+//		consume.setBackground(drawable2);
 
 		kindList.add("酒足饭饱");
 		kindList.add("穿金戴银");
@@ -139,33 +141,33 @@ public class JZ_Activity extends Activity {
 		kindList.add("斯是陋室");
 		kindList.add("踏破铁鞋");
 
-		/**
-		 * 测试同步按钮
-		 */
-		syButton.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				DataBase dataBase = new DataBase(JZ_Activity.this, "user.db");
-				CloudSendHelper cloudSendHelper = new CloudSendHelper(dataBase);
-				try {
-					try {
-						if (cloudSendHelper.send()) {
-							System.out.println("同步成功！");
-							Toast.makeText(JZ_Activity.this, "同步成功!",
-									Toast.LENGTH_LONG).show();
-						}
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
+		// /**
+		// * 测试同步按钮
+		// */
+		// syButton.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// // TODO Auto-generated method stub
+		// DataBase dataBase = new DataBase(JZ_Activity.this, "user.db");
+		// CloudSendHelper cloudSendHelper = new CloudSendHelper(dataBase);
+		// try {
+		// try {
+		// if (cloudSendHelper.send()) {
+		// System.out.println("同步成功！");
+		// Toast.makeText(JZ_Activity.this, "同步成功!",
+		// Toast.LENGTH_LONG).show();
+		// }
+		// } catch (ClassNotFoundException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// } catch (MalformedURLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+		// });
 		/**
 		 * 收入的事件
 		 */
@@ -178,12 +180,12 @@ public class JZ_Activity extends Activity {
 				number_out.setTextColor(Color.WHITE);
 				inOrOut = 1;
 				consume.setTextColor(Color.GREEN);
-				System.out.println("切换到收入类别：inOrOut应该=1，实际为" + inOrOut);
-				kind.setText("一定是妈妈又给你打了1000块钱！");
-				yiTextView.setClickable(false);
-				shiTextView.setClickable(false);
-				zhuTextView.setClickable(false);
-				xingTextView.setClickable(false);
+//				System.out.println("切换到收入类别：inOrOut应该=1，实际为" + inOrOut);
+//				kind.setText("一定是妈妈又给你打了1000块钱！");
+//				yiTextView.setClickable(false);
+//				shiTextView.setClickable(false);
+//				zhuTextView.setClickable(false);
+//				xingTextView.setClickable(false);
 			}
 		});
 
@@ -200,64 +202,64 @@ public class JZ_Activity extends Activity {
 				inOrOut = 0;
 				consume.setTextColor(Color.RED);
 				System.out.println("切换到支出类别：inOrOut应该=0，实际为" + inOrOut);
-				yiTextView.setClickable(true);
-				shiTextView.setClickable(true);
-				zhuTextView.setClickable(true);
-				xingTextView.setClickable(true);
+//				yiTextView.setClickable(true);
+//				shiTextView.setClickable(true);
+//				zhuTextView.setClickable(true);
+//				xingTextView.setClickable(true);
 			}
 		});
 
-		/**
-		 * 衣的事件
-		 */
-		yiTextView.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				kind.setText("连衣裙吗？");
-				consumekind = 1;
-			}
-		});
-
-		/**
-		 * 食的事件
-		 */
-		shiTextView.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				kind.setText("黄焖鸡米饭加排骨");
-				consumekind = 2;
-			}
-		});
-
-		/**
-		 * 住的事件
-		 */
-		zhuTextView.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				kind.setText("北门外的小旅馆50块钱一晚哦");
-				consumekind = 3;
-			}
-		});
-
-		/**
-		 * 行的事件
-		 */
-		xingTextView.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				kind.setText("这是无必要消费，下次走路，切记！");
-				consumekind = 4;
-			}
-		});
+		// /**
+		// * 衣的事件
+		// */
+		// yiTextView.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// // TODO Auto-generated method stub
+		// kind.setText("连衣裙吗？");
+		// consumekind = 1;
+		// }
+		// });
+		//
+		// /**
+		// * 食的事件
+		// */
+		// shiTextView.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// // TODO Auto-generated method stub
+		// kind.setText("黄焖鸡米饭加排骨");
+		// consumekind = 2;
+		// }
+		// });
+		//
+		// /**
+		// * 住的事件
+		// */
+		// zhuTextView.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// // TODO Auto-generated method stub
+		// kind.setText("北门外的小旅馆50块钱一晚哦");
+		// consumekind = 3;
+		// }
+		// });
+		//
+		// /**
+		// * 行的事件
+		// */
+		// xingTextView.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// // TODO Auto-generated method stub
+		// kind.setText("这是无必要消费，下次走路，切记！");
+		// consumekind = 4;
+		// }
+		// });
 
 		/**
 		 * 按钮0的事件
@@ -398,7 +400,8 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (consumString.length() > 0 && (consumString.indexOf(".")  < 0)) {
+				if (consumString.length() > 0
+						&& (consumString.indexOf(".") < 0)) {
 					consumString = consume.getText().toString() + ".";
 					consume.setText(consumString.toCharArray(), 0,
 							consumString.length());
@@ -476,8 +479,8 @@ public class JZ_Activity extends Activity {
 						// db.close();
 					}
 				}
-				Toast.makeText(JZ_Activity.this, "成功记入一笔!",
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(JZ_Activity.this, "成功记入一笔!", Toast.LENGTH_LONG)
+						.show();
 			}
 		});
 		/*

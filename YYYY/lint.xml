@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="NestedWeights">
+        <ignore path="res/layout/activity_jz1.xml" />
+    </issue>
+    <issue id="UselessLeaf">
+        <ignore path="res/layout/activity_jz1.xml" />
+    </issue>
+</lint>

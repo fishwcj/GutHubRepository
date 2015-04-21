@@ -13,7 +13,7 @@
 
     <!-- 记账 -->
 
-    <string name="remain_this_month">本月预算余额：</string>
+    <string name="remain_this_month">886.0</string>
     <string name="income">收入</string>
     <string name="payout">支出</string>
     <string name="one">1</string>
@@ -41,7 +41,20 @@
     <string name="write_this_point">记下这一笔</string>
     <string name="lastyear">上一年</string>
     <string name="nextyear">下一年</string>
-
+    <string name="mony">RMB</string>
+    <string name="remain">本月预算余额</string>
+    <string name="d">本月消费情况</string>
+    <string name="z">订攒钱目标 ></string>
+    <string name="k">已消费</string>
+    <string name="m">距目标</string>
+    <string name="y">可节省</string>
+    <string name="k1">100.0</string>
+    <string name="m1">1890.0</string>
+    <string name="y1">345.0</string>
+	<string name="kindtest">食  > 腐败聚会</string>
+	<string name="zq">攒钱目标</string>
+	<string name="jd">借贷管理</string>
+	<string name="zyj">逛攒友街</string>
     <!-- 预算 -->
 
     <string name="total_ys">总预算</string>

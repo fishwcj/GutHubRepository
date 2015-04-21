@@ -18,10 +18,13 @@ public final class R {
     }
     public static final class drawable {
         public static final int button=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int radius=0x7f020002;
-        public static final int stream=0x7f020003;
-        public static final int stream_textview=0x7f020004;
+        public static final int core=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int line=0x7f020003;
+        public static final int r=0x7f020004;
+        public static final int radius=0x7f020005;
+        public static final int stream=0x7f020006;
+        public static final int stream_textview=0x7f020007;
     }
     public static final class id {
         public static final int back=0x7f07002f;
@@ -77,19 +80,21 @@ public final class R {
         public static final int activity_count=0x7f030000;
         public static final int activity_index=0x7f030001;
         public static final int activity_jz=0x7f030002;
-        public static final int activity_stream=0x7f030003;
-        public static final int activity_street=0x7f030004;
-        public static final int activity_ys=0x7f030005;
+        public static final int activity_jz1=0x7f030003;
+        public static final int activity_stream=0x7f030004;
+        public static final int activity_street=0x7f030005;
+        public static final int activity_ys=0x7f030006;
     }
     public static final class string {
         /**  project 
          */
         public static final int app_name=0x7f050000;
-        public static final int back=0x7f050021;
+        public static final int back=0x7f05002f;
         public static final int budget_set=0x7f050012;
         public static final int clear=0x7f050010;
         public static final int clothes=0x7f050017;
         public static final int clothes1=0x7f050013;
+        public static final int d=0x7f050020;
         public static final int eat=0x7f050018;
         public static final int eat1=0x7f050014;
         public static final int eight=0x7f05000c;
@@ -98,32 +103,45 @@ public final class R {
         public static final int house=0x7f050019;
         public static final int house1=0x7f050015;
         public static final int income=0x7f050003;
+        public static final int jd=0x7f05002a;
+        public static final int k=0x7f050022;
+        public static final int k1=0x7f050025;
+        public static final int kindtest=0x7f050028;
         public static final int lastyear=0x7f05001c;
+        public static final int m=0x7f050023;
+        public static final int m1=0x7f050026;
+        public static final int mony=0x7f05001e;
         public static final int nextyear=0x7f05001d;
         public static final int nine=0x7f05000d;
         public static final int one=0x7f050005;
-        public static final int other=0x7f05001f;
+        public static final int other=0x7f05002d;
         public static final int payout=0x7f050004;
         public static final int point=0x7f05000f;
+        public static final int remain=0x7f05001f;
         /**  记账 
          */
         public static final int remain_this_month=0x7f050002;
         public static final int seven=0x7f05000b;
         public static final int six=0x7f05000a;
-        public static final int sure=0x7f050022;
+        public static final int sure=0x7f050030;
         public static final int three=0x7f050007;
         public static final int title_activity_ys_=0x7f050001;
-        public static final int total=0x7f050020;
+        public static final int total=0x7f05002e;
         /**  预算 
          */
-        public static final int total_ys=0x7f05001e;
+        public static final int total_ys=0x7f05002c;
         public static final int two=0x7f050006;
         public static final int type_consume=0x7f050011;
         public static final int walk=0x7f05001a;
         public static final int walk1=0x7f050016;
         public static final int write_this_point=0x7f05001b;
-        public static final int ys_init=0x7f050023;
+        public static final int y=0x7f050024;
+        public static final int y1=0x7f050027;
+        public static final int ys_init=0x7f050031;
+        public static final int z=0x7f050021;
         public static final int zero=0x7f05000e;
+        public static final int zq=0x7f050029;
+        public static final int zyj=0x7f05002b;
     }
     public static final class style {
         /** 
