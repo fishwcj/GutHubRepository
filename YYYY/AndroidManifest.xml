@@ -3,7 +3,9 @@
     package="com.yyyy.yyyy"
     android:versionCode="1"
     android:versionName="1.0" >
-<uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
@@ -12,7 +14,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar">
+        android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
             android:name="com.activity.Index_Activity"
             android:label="@string/app_name" >
@@ -34,6 +36,9 @@
             android:name="com.activity.YS_Activity"
             android:label="@string/title_activity_ys_" >
         </activity>
+        <activity
+            android:name="com.activity.SelectPicPopupWindow"
+            android:theme="@style/MyDialogStyleBottom" />
     </application>
 
 </manifest>

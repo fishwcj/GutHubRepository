@@ -55,6 +55,7 @@
 	<string name="zq">攒钱目标</string>
 	<string name="jd">借贷管理</string>
 	<string name="zyj">逛攒友街</string>
+	<string name="l">请选择消费类型</string>
     <!-- 预算 -->
 
     <string name="total_ys">总预算</string>

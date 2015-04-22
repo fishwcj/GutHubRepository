@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.LocalActivityManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -24,7 +23,7 @@ import android.widget.TextView;
 
 import com.dao.DataBase;
 import com.dao.YS_DataBaseHelper;
-import com.model.Index_ContorlHelper;
+import com.model.BackgroundColor;
 import com.yyyy.yyyy.R;
 
 @SuppressLint("NewApi")
@@ -43,10 +42,11 @@ public class YS_Activity extends Activity {
 	private TextView show_eat;
 	private RadioButton house;
 	private TextView show_house;
+	@SuppressWarnings("unused")
 	private RadioButton walk;
 	private TextView show_walk;
 	private ArrayList<TextView> show_list;// 单项预算的显示
-	private TextView item_view;// 自预算的显示view
+//	private TextView item_view;// 自预算的显示view
 	private RadioButton rb;
 	// 键盘
 	private Button number_1;
@@ -436,10 +436,14 @@ public class YS_Activity extends Activity {
 							.toString());
 					kind[i] = kind_list.get(i);
 				}
+				Index_Activity.remain += ys_total - Index_Activity.budget;
+				Index_Activity.budget = ys_total;
 				// 如果保存到数据库成功则结束此activity(保存总预算和分预算)
 				if (ysHelper.add(budget, kind) && ysHelper.addtotal(ys_total)) {
 					YS_Activity.this.finish();
 				}
+				BackgroundColor backgroundColor = new BackgroundColor();
+				backgroundColor.refreshback();
 			}
 		});
 	}

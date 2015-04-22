@@ -38,6 +38,7 @@ public class TJ_DataBaseHelper {
 		perc_List = new ArrayList<Float>();
 		SQLiteDatabase db = dataBase.getReadableDatabase();
 		cursor1 = db.rawQuery("select totalbudget-remain as total_consume from tabletotalbudget", null);
+		@SuppressWarnings("unused")
 		int index = cursor1.getCount();
 		
 		while (cursor1.moveToNext()) {

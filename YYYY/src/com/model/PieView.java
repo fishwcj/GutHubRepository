@@ -1,6 +1,6 @@
 package com.model;
 
-import android.R.integer;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -40,6 +40,7 @@ public class PieView extends ViewBase {
 		this.percent = percent;
 	}
 
+	@SuppressLint("DrawAllocation")
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);

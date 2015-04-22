@@ -6,39 +6,33 @@ package com.activity;
  * @author wcj
  * @time 15-3-31晚
  */
-import java.net.MalformedURLException;
+
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.dao.DataBase;
 import com.dao.YS_DataBaseHelper;
-import com.model.CloudSendHelper;
+import com.model.BackgroundColor;
 import com.yyyy.yyyy.R;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class JZ_Activity extends Activity {
 
-	private TextView budgetRemain;
-	private TextView yiTextView;
-	private TextView shiTextView;
-	private TextView zhuTextView;
-	private TextView xingTextView;
+	public static TextView budgetRemain;
 	private TextView kind;
-	private TextView consume;
+	public TextView consume;
 	private Button number_1;
 	private Button number_2;
 	private Button number_3;
@@ -50,7 +44,7 @@ public class JZ_Activity extends Activity {
 	private Button number_9;
 	private Button number_0;
 	// 测试按钮
-	private Button syButton;
+	// private Button syButton;
 
 	private TextView number_in;
 	private TextView number_out;
@@ -58,9 +52,11 @@ public class JZ_Activity extends Activity {
 	private Button number_float;
 	private Button number_clear;
 	private String consumString = "";
+	public static TextView consumed;
+	public static LinearLayout linearLayout;
 	// 0代表支出，1代表收入，默认支出
 	private int inOrOut = 0;
-	private int consumekind = 2; // 消费类别参数（默认为食）
+	public static int consumekind = 2; // 消费类别参数（默认为食）
 	private ArrayList<String> kindList = new ArrayList<String>();
 	SQLiteDatabase db;
 	public static Activity jzActivity;
@@ -106,34 +102,11 @@ public class JZ_Activity extends Activity {
 		number_float = (Button) this.findViewById(R.id.number_float);
 		number_clear = (Button) this.findViewById(R.id.number_clear);
 		button_ok = (Button) this.findViewById(R.id.ok);
+		consumed = (TextView) this.findViewById(R.id.comsumed);
+		linearLayout = (LinearLayout) this.findViewById(R.id.background);
 		// 测试按钮
 		// syButton = (Button) this.findViewById(R.id.sy);
-		//
-		// // yiTextView = (TextView) this.findViewById(R.id.yi);
-		// // shiTextView = (TextView) this.findViewById(R.id.shi);
-		// // zhuTextView = (TextView) this.findViewById(R.id.zhu);
-		// // xingTextView = (TextView) this.findViewById(R.id.xing);
-		// // kind = (TextView) this.findViewById(R.id.kind);
-
-//		Drawable drawable = getResources().getDrawable(R.drawable.button);
-//		Drawable drawable2 = getResources().getDrawable(R.drawable.radius);
-//		number_0.setBackground(drawable);
-//		number_1.setBackground(drawable);
-//		number_2.setBackground(drawable);
-//		number_3.setBackground(drawable);
-//		number_4.setBackground(drawable);
-//		number_5.setBackground(drawable);
-//		number_6.setBackground(drawable);
-//		number_7.setBackground(drawable);
-//		number_8.setBackground(drawable);
-//		number_9.setBackground(drawable);
-//		number_float.setBackground(drawable);
-//		number_clear.setBackground(drawable);
-//		button_ok.setBackground(drawable);
-//		// 测试按钮
-//		// syButton.setBackground(drawable);
-//
-//		consume.setBackground(drawable2);
+		kind = (TextView) this.findViewById(R.id.kind);
 
 		kindList.add("酒足饭饱");
 		kindList.add("穿金戴银");
@@ -169,6 +142,19 @@ public class JZ_Activity extends Activity {
 		// }
 		// });
 		/**
+		 * 点击类型事件
+		 */
+		kind.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(JZ_Activity.this,
+						SelectPicPopupWindow.class));
+			}
+		});
+
+		/**
 		 * 收入的事件
 		 */
 		number_in.setOnClickListener(new View.OnClickListener() {
@@ -180,12 +166,6 @@ public class JZ_Activity extends Activity {
 				number_out.setTextColor(Color.WHITE);
 				inOrOut = 1;
 				consume.setTextColor(Color.GREEN);
-//				System.out.println("切换到收入类别：inOrOut应该=1，实际为" + inOrOut);
-//				kind.setText("一定是妈妈又给你打了1000块钱！");
-//				yiTextView.setClickable(false);
-//				shiTextView.setClickable(false);
-//				zhuTextView.setClickable(false);
-//				xingTextView.setClickable(false);
 			}
 		});
 
@@ -202,64 +182,8 @@ public class JZ_Activity extends Activity {
 				inOrOut = 0;
 				consume.setTextColor(Color.RED);
 				System.out.println("切换到支出类别：inOrOut应该=0，实际为" + inOrOut);
-//				yiTextView.setClickable(true);
-//				shiTextView.setClickable(true);
-//				zhuTextView.setClickable(true);
-//				xingTextView.setClickable(true);
 			}
 		});
-
-		// /**
-		// * 衣的事件
-		// */
-		// yiTextView.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // TODO Auto-generated method stub
-		// kind.setText("连衣裙吗？");
-		// consumekind = 1;
-		// }
-		// });
-		//
-		// /**
-		// * 食的事件
-		// */
-		// shiTextView.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // TODO Auto-generated method stub
-		// kind.setText("黄焖鸡米饭加排骨");
-		// consumekind = 2;
-		// }
-		// });
-		//
-		// /**
-		// * 住的事件
-		// */
-		// zhuTextView.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // TODO Auto-generated method stub
-		// kind.setText("北门外的小旅馆50块钱一晚哦");
-		// consumekind = 3;
-		// }
-		// });
-		//
-		// /**
-		// * 行的事件
-		// */
-		// xingTextView.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // TODO Auto-generated method stub
-		// kind.setText("这是无必要消费，下次走路，切记！");
-		// consumekind = 4;
-		// }
-		// });
 
 		/**
 		 * 按钮0的事件
@@ -269,9 +193,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "0";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "0";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 
@@ -283,9 +209,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "1";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "1";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 		/**
@@ -296,9 +224,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "2";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "2";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 		/**
@@ -309,9 +239,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "3";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "3";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 		/**
@@ -322,9 +254,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "4";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "4";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 		/**
@@ -335,9 +269,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "5";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "5";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 		/**
@@ -348,9 +284,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "6";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "6";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 		/**
@@ -361,9 +299,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "7";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "7";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 		/**
@@ -374,9 +314,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "8";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "8";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 		/**
@@ -387,9 +329,11 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				consumString = consume.getText().toString() + "9";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
+				if (check(consumString)) { // 检测输入是否合法
+					consumString += "9";
+					consume.setText(consumString.toCharArray(), 0,
+							consumString.length());
+				}
 			}
 		});
 		/**
@@ -400,11 +344,13 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (consumString.length() > 0
-						&& (consumString.indexOf(".") < 0)) {
-					consumString = consume.getText().toString() + ".";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
+				if (check(consumString)) {
+					if (consumString.length() > 0
+							&& (consumString.indexOf(".") < 0)) {
+						consumString = consume.getText().toString() + ".";
+						consume.setText(consumString.toCharArray(), 0,
+								consumString.length());
+					}
 				}
 			}
 		});
@@ -479,6 +425,12 @@ public class JZ_Activity extends Activity {
 						// db.close();
 					}
 				}
+				BackgroundColor backgroundColor = new BackgroundColor();
+				backgroundColor.refreshback();
+				// 更新消费
+				String consumed = new DecimalFormat("0.0")
+						.format(Index_Activity.budget - Index_Activity.remain);
+				JZ_Activity.consumed.setText(consumed);
 				Toast.makeText(JZ_Activity.this, "成功记入一笔!", Toast.LENGTH_LONG)
 						.show();
 			}
@@ -497,4 +449,26 @@ public class JZ_Activity extends Activity {
 
 	}
 
+	/**
+	 * 检测输入是否合法
+	 * 
+	 * @param consumeString
+	 *            编辑栏字符串
+	 * @return
+	 */
+	public boolean check(String consumeString) {
+		boolean TAG = false;
+		// 浮点数
+		if (consumeString.contains(".")) {
+			if (consumeString.indexOf(".") < 4
+					|| (consumeString.length() - consumeString.indexOf(".")) < 3) {
+				TAG = true;
+			}
+		} else {// 整数
+			if (consumeString.length() < 6) {
+				TAG = true;
+			}
+		}
+		return TAG;
+	}
 }

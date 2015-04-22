@@ -1,10 +1,13 @@
 package com.activity;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 //import org.apache.http.impl.conn.SingleClientConnManager;
+
+
 
 
 
@@ -26,6 +29,7 @@ import android.view.ViewGroup;
 
 import com.dao.DataBase;
 import com.dao.JZ_DataBaseHelper;
+import com.model.BackgroundColor;
 import com.model.Index_ContorlHelper;
 import com.model.Init;
 import com.yyyy.yyyy.R;
@@ -41,12 +45,11 @@ public class Index_Activity extends Activity {
 	private PagerTitleStrip pagerTitleStrip;
 	private List<View> views;
 	public static Activity indexActivity;
+	public static float remain;//剩余预算
+	public static float budget;//总预算
 	LocalActivityManager manager = null;
-	// 打开数据库
-	public static DataBase dataBase;
-	
-	//第一次启动，SIGN = 0;标志位
-	static int SIGN = 0;
+	public static DataBase dataBase;// 打开数据库
+	static int SIGN = 0;//第一次启动，SIGN = 0;标志位
 	int current = 0;
 	int passed = -1;
 	Index_ContorlHelper index_ContorlHelper;
@@ -58,6 +61,8 @@ public class Index_Activity extends Activity {
 			//更新记账界面预算显示
 			JZ_DataBaseHelper jz_DataBaseHelper = new JZ_DataBaseHelper();
 			jz_DataBaseHelper.updateBudgetRemain(dataBase);
+			BackgroundColor backgroundColor = new BackgroundColor();
+			backgroundColor.refreshback();
 			System.out.println("调用了resum");
 		}
 		SIGN++;
@@ -92,7 +97,7 @@ public class Index_Activity extends Activity {
 		intent_countIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		views.add(getView("Count_Activity", intent_countIntent));
 		
-		//更新记账界面预算显示
+		//第一次启动更新记账界面预算显示
 		JZ_DataBaseHelper jz_DataBaseHelper = new JZ_DataBaseHelper();
 		jz_DataBaseHelper.updateBudgetRemain(dataBase);
 		
@@ -134,6 +139,14 @@ public class Index_Activity extends Activity {
 				// TODO Auto-generated method stub
 			}
 		});
+		//更新界面颜色
+		BackgroundColor backgroundColor = new BackgroundColor();
+		backgroundColor.refreshback();
+		//更新消费
+		String consumed = new DecimalFormat("0.0").format(budget - remain);
+		System.out.println("格式化之后的浮点数" + consumed);
+		JZ_Activity.consumed.setText(consumed);
+		
 	}
 
 	private View getView(String id, Intent intent) {

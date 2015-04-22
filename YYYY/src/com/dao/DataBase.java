@@ -90,6 +90,47 @@ public class DataBase extends SQLiteOpenHelper {
 		sql = "insert into time(lastdate,sytime) values ('" + currentString
 				+ "','2012-01-01 00:00:00')";
 		db.execSQL(sql);
+
+		// 测试表5消费类型
+		sql = "create table kind(firstid int, secondid int, kindname varchar(20))";
+		db.execSQL(sql);
+		// 插入测试类型 大类衣
+		sql = "insert into kind(firstid,secondid,kindname) values (1,1,'衣1')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (1,2,'衣2')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (1,3,'衣3')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (1,4,'衣4')";
+		db.execSQL(sql);
+		// 大类 食
+		sql = "insert into kind(firstid,secondid,kindname) values (2,1,'食1')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (2,2,'食2')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (2,3,'食3')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (2,4,'食4')";
+		db.execSQL(sql);
+		// 大类 住
+		sql = "insert into kind(firstid,secondid,kindname) values (3,1,'住1')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (3,2,'住2')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (3,3,'住3')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (3,4,'住4')";
+		db.execSQL(sql);
+		// 大类 行
+		sql = "insert into kind(firstid,secondid,kindname) values (4,1,'行1')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (4,2,'行2')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (4,3,'行3')";
+		db.execSQL(sql);
+		sql = "insert into kind(firstid,secondid,kindname) values (4,4,'行4')";
+		db.execSQL(sql);
+
 	}
 
 	@Override

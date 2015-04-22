@@ -3,8 +3,6 @@ package com.activity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.security.auth.PrivateCredentialPermission;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
