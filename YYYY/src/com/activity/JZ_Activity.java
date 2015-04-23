@@ -7,6 +7,7 @@ package com.activity;
  * @time 15-3-31晚
  */
 
+import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ import java.util.ArrayList;
 import com.dao.DataBase;
 import com.dao.YS_DataBaseHelper;
 import com.model.BackgroundColor;
+import com.model.CloudSendHelper;
 import com.yyyy.yyyy.R;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -44,7 +47,7 @@ public class JZ_Activity extends Activity {
 	private Button number_9;
 	private Button number_0;
 	// 测试按钮
-	// private Button syButton;
+	 private Button syButton;
 
 	private TextView number_in;
 	private TextView number_out;
@@ -105,7 +108,7 @@ public class JZ_Activity extends Activity {
 		consumed = (TextView) this.findViewById(R.id.comsumed);
 		linearLayout = (LinearLayout) this.findViewById(R.id.background);
 		// 测试按钮
-		// syButton = (Button) this.findViewById(R.id.sy);
+		 syButton = (Button) this.findViewById(R.id.sy);
 		kind = (TextView) this.findViewById(R.id.kind);
 
 		kindList.add("酒足饭饱");
@@ -114,33 +117,33 @@ public class JZ_Activity extends Activity {
 		kindList.add("斯是陋室");
 		kindList.add("踏破铁鞋");
 
-		// /**
-		// * 测试同步按钮
-		// */
-		// syButton.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // TODO Auto-generated method stub
-		// DataBase dataBase = new DataBase(JZ_Activity.this, "user.db");
-		// CloudSendHelper cloudSendHelper = new CloudSendHelper(dataBase);
-		// try {
-		// try {
-		// if (cloudSendHelper.send()) {
-		// System.out.println("同步成功！");
-		// Toast.makeText(JZ_Activity.this, "同步成功!",
-		// Toast.LENGTH_LONG).show();
-		// }
-		// } catch (ClassNotFoundException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// } catch (MalformedURLException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// }
-		// });
+		 /**
+		 * 测试同步按钮
+		 */
+		 syButton.setOnClickListener(new View.OnClickListener() {
+		
+		 @Override
+		 public void onClick(View v) {
+		 // TODO Auto-generated method stub
+		 DataBase dataBase = new DataBase(JZ_Activity.this, "user.db");
+		 CloudSendHelper cloudSendHelper = new CloudSendHelper(dataBase);
+		 try {
+		 try {
+		 if (cloudSendHelper.send()) {
+		 System.out.println("同步成功！");
+		 Toast.makeText(JZ_Activity.this, "同步成功!",
+		 Toast.LENGTH_LONG).show();
+		 }
+		 } catch (ClassNotFoundException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 }
+		 } catch (MalformedURLException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 }
+		 }
+		 });
 		/**
 		 * 点击类型事件
 		 */
@@ -381,7 +384,7 @@ public class JZ_Activity extends Activity {
 					ContentValues values = new ContentValues();
 					// 获得时间
 					SimpleDateFormat sDateFormat = new SimpleDateFormat(
-							"yyyy-MM-dd    hh:mm:ss");
+							"yyyy-MM-dd hh:mm:ss");
 					String date = sDateFormat.format(new java.util.Date());
 					// 字符串转换为浮点数
 					float consume1 = Float.parseFloat(consumString);

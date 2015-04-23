@@ -122,23 +122,23 @@ public class Index_ContorlHelper {
 	/*
 	 * 画统计图
 	 */
-	private void draw_TJ(){
+	private void draw_TJ() {
 		Activity count_Activity = Count_Activity.countActivity;
-		LinearLayout pieViewLayout = (LinearLayout)count_Activity.findViewById(R.id.pieView);
-		TJ_DrawHelper drawHelper = new TJ_DrawHelper(count_Activity,
+		LinearLayout pieViewLayout = (LinearLayout) count_Activity
+				.findViewById(R.id.pieView1);
+		TJ_DrawPieHelper drawHelper = new TJ_DrawPieHelper(count_Activity,
 				dataBase);
-
 		PieView pieView = drawHelper.Draw();
 		if (pieView.percent[0] == 0) {
-			Toast.makeText(count_Activity, "没有消费记录", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(count_Activity, "没有消费记录", Toast.LENGTH_SHORT).show();
 		} else {
-			if(pieViewLayout != null){
-				pieViewLayout.removeAllViews();
+			if (pieViewLayout != null) {
+				pieViewLayout.removeAllViews();// 先清楚原来的图				
 			}
-			LayoutParams show = new LayoutParams(100, 100);
-			pieViewLayout.addView(pieView, show);
-			//count_Activity.setContentView(pieView, show);
+			LayoutParams show = new LayoutParams(LayoutParams.WRAP_CONTENT,
+					500);// 确定
+			// 画布大小
+			pieViewLayout.addView(pieView, show);// 将上图作为子布局加入到父布局中
 		}
 
 	}

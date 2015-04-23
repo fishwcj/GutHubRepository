@@ -13,12 +13,10 @@ public class ViewBase extends View {
 	}
 
 	@Override
-	 protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-	
-	 height = View.MeasureSpec.getSize(heightMeasureSpec);//计算高度（由上一层传入）
-	 width = View.MeasureSpec.getSize(widthMeasureSpec);//计算宽度（由上一层传入）
-	 //exactly
-	 setMeasuredDimension(width, height);//设置实际高度和宽度	
-	 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	 }
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		height = 500;
+		width = 500;
+		setMeasuredDimension(width, height);// 设置实际高度和宽度
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+	}
 }

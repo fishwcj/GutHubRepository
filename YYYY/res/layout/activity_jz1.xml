@@ -246,8 +246,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:gravity="right"
             android:clickable="true"
+            android:gravity="right"
             android:paddingRight="15dp"
             android:text="@string/kindtest"
             android:textColor="#EE7942"
@@ -361,9 +361,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
+                        android:layout_weight="8"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
-                        android:layout_weight="8"
                         android:text="@string/jd" />
 
                     <TextView
@@ -624,6 +624,18 @@
                 android:background="@drawable/r"
                 android:gravity="center"
                 android:text="@string/write_this_point"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/sy"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/r"
+                android:gravity="center"
+                android:text="同步"
                 android:textSize="15sp" />
 
             <TextView

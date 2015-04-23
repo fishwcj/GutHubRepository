@@ -60,7 +60,7 @@ public class CloudSendHelper {
 		setcloudData();
 		URL url = null;
 		try {
-			url = new URL("http://192.168.191.1:8080/My/servlet/Receive");
+			url = new URL("http://192.168.191.1:8080/Bill/servlet/Receive");
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -167,6 +167,9 @@ public class CloudSendHelper {
 		} else {
 			System.out.println("未读取到收入");
 		}
+		
+		//更新同步时间
+		search.updateTime();
 		System.out.println("传输对象准备完毕！");
 	}
 }

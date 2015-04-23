@@ -10,21 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="统计分析界面" />
+        android:text="个人消费统计分析" />
 
-    
     <LinearLayout
-            android:id="@+id/pieView"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" >
-        </LinearLayout>
+        android:id="@+id/pieView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/pieView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/cylinderView"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" 
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
     </LinearLayout>
 
 </LinearLayout>

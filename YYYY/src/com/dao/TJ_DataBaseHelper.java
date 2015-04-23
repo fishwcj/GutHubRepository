@@ -5,6 +5,7 @@
  */
 package com.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -23,7 +24,7 @@ public class TJ_DataBaseHelper {
 
 	/*
 	 * 
-	 * 获取某一类的消费总额
+	 * 获取某一类的消费总额， 以float_list 的形式返回
 	 */
 	public ArrayList<Float> getTypeConsume() {
 
@@ -32,18 +33,16 @@ public class TJ_DataBaseHelper {
 		Cursor cursor1;
 		float item;
 		float total = 0;
-		float percent ;
-		
-		
+		float percent;
+		BigDecimal b,b1;
 		perc_List = new ArrayList<Float>();
 		SQLiteDatabase db = dataBase.getReadableDatabase();
-		cursor1 = db.rawQuery("select totalbudget-remain as total_consume from tabletotalbudget", null);
-		@SuppressWarnings("unused")
-		int index = cursor1.getCount();
-		
+		cursor1 = db
+				.rawQuery(
+						"select totalbudget-remain as total_consume from tabletotalbudget",
+						null);
 		while (cursor1.moveToNext()) {
 			total = cursor1.getFloat(cursor1.getColumnIndex("total_consume"));
-			
 		}
 		cursor1.close();
 		if (total == 0) {
@@ -51,28 +50,24 @@ public class TJ_DataBaseHelper {
 			perc_List.add(total);
 			perc_List.add(total);
 			perc_List.add(total);
-			
+
 		} else {
-			
-			cursor = db
-					.rawQuery(
-							"select budget-remain as sum_consume from tablebudget ",
-							null);
-			index = cursor.getCount();
-			
+			cursor = db.rawQuery(
+					"select budget-remain as sum_consume from tablebudget ",
+					null);
 			while (cursor.moveToNext()) {
-
 				item = cursor.getFloat(cursor.getColumnIndex("sum_consume"));
-				System.out.println(item+"itemitem");
-				percent = item/total*360;
+				b = new BigDecimal(item/total);
+				percent = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+				b1 = new BigDecimal(percent * 360);
+				percent = b1.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+				System.out.println("百分比"+percent);
+				//保留两位有效数字
+				
 				perc_List.add(percent);
-
 			}
 			cursor.close();
 		}
-
-		
-		
 		return perc_List;
 	}
 }
