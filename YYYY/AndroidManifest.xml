@@ -32,6 +32,8 @@
         </activity>
         <activity android:name="com.activity.Street_Activity" >
         </activity>
+        <activity android:name="com.activity.Publish_Activity" >
+        </activity>
         <activity
             android:name="com.activity.YS_Activity"
             android:label="@string/title_activity_ys_" >

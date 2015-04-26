@@ -307,12 +307,14 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/zq"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:layout_weight="8"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
-                        android:text="@string/zq" />
+                        android:text="@string/zq" 
+                        android:clickable="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -359,12 +361,14 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/jd"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:layout_weight="8"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
-                        android:text="@string/jd" />
+                        android:text="@string/jd" 
+                        android:clickable="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -411,12 +415,14 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/zyj"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:layout_weight="8"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
-                        android:text="@string/zyj" />
+                        android:text="@string/zyj" 
+                        android:clickable="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
