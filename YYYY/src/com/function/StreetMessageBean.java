@@ -1,7 +1,6 @@
 package com.function;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class StreetMessageBean implements Serializable  {
 	/**

@@ -1,9 +1,7 @@
 package com.function;
 
-import com.activity.Stream_Activity;
 import com.activity.Street_Activity;
 import com.yyyy.yyyy.R;
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;

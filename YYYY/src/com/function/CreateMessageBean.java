@@ -1,5 +1,6 @@
 package com.function;
 
+import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,11 +17,11 @@ public class CreateMessageBean {
 		return messageBean;
 	}
 	
-	private String getUserId(){
-		String userid = "";
-		
-		return userid;
-	}
+//	private String getUserId(){
+//		String userid = "";
+//		
+//		return userid;
+//	}
 	
 	private String getUserName(){
 		String userName = "Œ‚≥–ËÓ";
@@ -34,6 +35,7 @@ public class CreateMessageBean {
 		return address;
 	}
 	
+	@SuppressLint("SimpleDateFormat")
 	private String getDate(){
 		String currentString = "";
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

@@ -72,6 +72,7 @@ public class JZ_Activity extends Activity {
 
 	@Override
 	protected void onResume() {
+		super.onResume();
 		System.out.println("hehe调用了Resume");
 	};
 
@@ -140,11 +141,7 @@ public class JZ_Activity extends Activity {
 				CloudSendHelper cloudSendHelper = new CloudSendHelper(dataBase);
 				try {
 					try {
-						if (cloudSendHelper.send()) {
-							System.out.println("同步成功！");
-							Toast.makeText(JZ_Activity.this, "同步成功!",
-									Toast.LENGTH_LONG).show();
-						}
+						cloudSendHelper.send();
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

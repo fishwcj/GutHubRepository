@@ -18,7 +18,9 @@ import android.database.Cursor;
 //import android.provider.CalendarContract.Reminders;
 
 import android.os.StrictMode;
+import android.widget.Toast;
 
+import com.activity.JZ_Activity;
 import com.dao.DataBase;
 import com.dao.SearchCloudData;
 
@@ -93,6 +95,8 @@ public class CloudSendHelper {
 			Object obj = objectInputStream.readObject();
 			System.out.println(obj);
 			objectInputStream.close();
+			Toast.makeText(JZ_Activity.jzActivity, "同步成功!",
+					Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

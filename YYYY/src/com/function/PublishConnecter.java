@@ -7,8 +7,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 
+import com.activity.Publish_Activity;
+import com.activity.Street_Activity;
+
+import android.content.Intent;
 import android.os.StrictMode;
 
 public class PublishConnecter {
@@ -52,6 +55,8 @@ public class PublishConnecter {
 			
 			if(ok.equals("1")){
 				//跳转回去刷新
+				Intent intent = new Intent(Publish_Activity.publish_Activity, Street_Activity.class);
+				Publish_Activity.publish_Activity.startActivity(intent);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
