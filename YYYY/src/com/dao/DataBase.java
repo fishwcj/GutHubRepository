@@ -131,6 +131,11 @@ public class DataBase extends SQLiteOpenHelper {
 		sql = "insert into kind(firstid,secondid,kindname) values (4,4,'行4')";
 		db.execSQL(sql);
 
+		// 测试表6 用户表 tag为0代表未登录（未注册状态）
+		sql = "create table user(id varchar(10), name varchar(20), tag int)";
+		db.execSQL(sql);
+		sql = "insert into user values ('null','某攒友',0)";
+		db.execSQL(sql);
 	}
 
 	@Override

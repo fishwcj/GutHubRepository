@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.dao.LS_DataBaseHelper;
+import com.dao.LS_DAO;
 import com.model.LSManager;
 import com.yyyy.yyyy.R;
 
@@ -54,8 +54,8 @@ public class Stream_Activity extends Activity {
 				thisyear.setText(year.toString());
 				System.out.println("TAG="+TAG);
 				
-				LS_DataBaseHelper ls_DataBaseHelper = new LS_DataBaseHelper(
-						Stream_Activity.this, Index_Activity.dataBase);
+				LS_DAO ls_DataBaseHelper = new LS_DAO(
+						Stream_Activity.this);
 				LSManager lsManager = new LSManager(ls_DataBaseHelper);
 				lsManager.getLastYear();
 			}
@@ -73,8 +73,8 @@ public class Stream_Activity extends Activity {
 					nextyear.setText("");
 					nextyear.setClickable(false);
 				}
-				LS_DataBaseHelper ls_DataBaseHelper = new LS_DataBaseHelper(
-						Stream_Activity.this, Index_Activity.dataBase);
+				LS_DAO ls_DataBaseHelper = new LS_DAO(
+						Stream_Activity.this);
 				LSManager lsManager = new LSManager(ls_DataBaseHelper);
 				lsManager.getNextYear(year);
 				System.out.println("TAG="+TAG);

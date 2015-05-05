@@ -22,7 +22,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.dao.DataBase;
-import com.dao.YS_DataBaseHelper;
+import com.dao.YS_DAO;
 import com.model.BackgroundColor;
 import com.yyyy.yyyy.R;
 
@@ -78,7 +78,7 @@ public class YS_Activity extends Activity {
 	private float budget[] = { 0 , 0 ,0 , 0};
 
 	private ArrayList<Integer> kind_list = new ArrayList<Integer>();
-	private YS_DataBaseHelper yS_handler;
+	private YS_DAO yS_handler;
 	private Cursor cursor;
 	// private int i = 0;
 	DataBase dataBase;
@@ -153,7 +153,7 @@ public class YS_Activity extends Activity {
 		kind_list.add(3);
 		kind_list.add(4);
 		dataBase = new DataBase(YS_Activity.this, "user.db");
-		yS_handler = new YS_DataBaseHelper(YS_Activity.this, dataBase);
+		yS_handler = new YS_DAO(YS_Activity.this);
 		// 从数据库中获取每种类型的预算值
 		cursor = yS_handler.read_budget();
 		// 读取游标的索引
@@ -424,8 +424,8 @@ public class YS_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// 首先插入到数据库，再结束此activity
-				YS_DataBaseHelper ysHelper = new YS_DataBaseHelper(
-						YS_Activity.this, dataBase);
+				YS_DAO ysHelper = new YS_DAO(
+						YS_Activity.this);
 				// 得到有多少个类别
 				int numberOfKind = show_list.size();
 				float[] budget = new float[numberOfKind];

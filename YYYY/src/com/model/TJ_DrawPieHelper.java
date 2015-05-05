@@ -4,26 +4,21 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.graphics.Color;
-
-import com.dao.DataBase;
-import com.dao.TJ_DataBaseHelper;
+import com.dao.TJ_DAO;
 
 public class TJ_DrawPieHelper {
 	ArrayList<Float> consume_type_listArrayList;
-	TJ_DataBaseHelper tj_DataBaseHelper;
+	TJ_DAO tj_DataBaseHelper;
 	Activity manager;
-	DataBase dataBase;
 
-	public TJ_DrawPieHelper(Activity manager, DataBase dataBase) {
+	public TJ_DrawPieHelper(Activity manager) {
 		this.manager = manager;
-		this.dataBase = dataBase;
 	}
 
 	// 从数据库获取每种类别的百分比
 	public void getPercent() {
 		consume_type_listArrayList = new ArrayList<Float>();
-		TJ_DataBaseHelper tj_DataBaseHelper = new TJ_DataBaseHelper(manager,
-				dataBase);
+		TJ_DAO tj_DataBaseHelper = new TJ_DAO(manager);
 		consume_type_listArrayList = tj_DataBaseHelper.getTypeConsume();
 
 	}

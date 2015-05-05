@@ -11,8 +11,8 @@ import com.activity.Index_Activity;
 import com.activity.JZ_Activity;
 import com.activity.Stream_Activity;
 import com.dao.DataBase;
-import com.dao.JZ_DataBaseHelper;
-import com.dao.LS_DataBaseHelper;
+import com.dao.JZ_DAO;
+import com.dao.LS_DAO;
 import com.yyyy.yyyy.R;
 
 import android.annotation.SuppressLint;
@@ -95,8 +95,8 @@ public class Index_ContorlHelper {
 				.findViewById(R.id.lin);
 		// 滑动到流水界面，更新
 		if (current == 1) {
-			LS_DataBaseHelper ls_DataBaseHelper = new LS_DataBaseHelper(
-					context, dataBase);
+			LS_DAO ls_DataBaseHelper = new LS_DAO(
+					context);
 			LSManager lsManager = new LSManager(ls_DataBaseHelper);
 			
 			String[] jString = currentString.split("-");
@@ -115,8 +115,8 @@ public class Index_ContorlHelper {
 	 * 处理记账界面
 	 */
 	private void updatejzUI() {
-		JZ_DataBaseHelper jz_DataBaseHelper = new JZ_DataBaseHelper();
-		jz_DataBaseHelper.updateBudgetRemain(dataBase);
+		JZ_DAO jz_DataBaseHelper = new JZ_DAO();
+		jz_DataBaseHelper.updateBudgetRemain();
 	}
 	
 	/*
@@ -126,8 +126,7 @@ public class Index_ContorlHelper {
 		Activity count_Activity = Count_Activity.countActivity;
 		LinearLayout pieViewLayout = (LinearLayout) count_Activity
 				.findViewById(R.id.pieView1);
-		TJ_DrawPieHelper drawHelper = new TJ_DrawPieHelper(count_Activity,
-				dataBase);
+		TJ_DrawPieHelper drawHelper = new TJ_DrawPieHelper(count_Activity);
 		PieView pieView = drawHelper.Draw();
 		if (pieView.percent[0] == 0) {
 			Toast.makeText(count_Activity, "没有消费记录", Toast.LENGTH_SHORT).show();

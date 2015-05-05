@@ -27,14 +27,14 @@ public class JZ_DataBaseHelper {
 	/**
 	 * 更新记账页面的预算余额显示
 	 */
-	public void updateBudgetRemain(DataBase dataBase) {
+	public void updateBudgetRemain() {
 		Activity jz_Activity = JZ_Activity.jzActivity;//获得JZ_Activity引用
 		TextView remainTextView = (TextView) jz_Activity
 				.findViewById(R.id.budgetRemain);
-		SQLiteDatabase db = dataBase.getReadableDatabase();
+//		SQLiteDatabase db = dataBase.getReadableDatabase();
 		String sql = "select remain,totalbudget from tabletotalbudget where month = '"
 				+ currentString + "'";
-		Cursor cursor = db.rawQuery(sql, null);
+		Cursor cursor = Index_Activity.db.rawQuery(sql, null);
 		if (cursor.moveToNext()) {
 			String remainString = cursor.getString(cursor
 					.getColumnIndex("remain"));

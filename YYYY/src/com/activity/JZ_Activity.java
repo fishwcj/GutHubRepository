@@ -13,16 +13,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.dao.DataBase;
-import com.dao.YS_DataBaseHelper;
+import com.dao.YS_DAO;
 import com.model.BackgroundColor;
 import com.model.CloudSendHelper;
 import com.yyyy.yyyy.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -36,6 +36,7 @@ public class JZ_Activity extends Activity {
 	public static TextView budgetRemain;
 	private TextView kind;
 	public TextView consume;
+	private TextView setting;
 	private Button number_1;
 	private Button number_2;
 	private Button number_3;
@@ -58,17 +59,10 @@ public class JZ_Activity extends Activity {
 	private int inOrOut = 0; // 0代表支出，1代表收入，默认支出
 	public static int consumekind = 2; // 消费类别参数（默认为食）
 	private ArrayList<String> kindList = new ArrayList<String>();
-	private SQLiteDatabase db;
 	public static Activity jzActivity;
 	private TextView zyj;
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (db != null) {
-			db.close();// SQLiteDatabase sqldb;
-		}
-	}
+	private TextView zq;
+	private ProgressDialog pd;
 
 	@Override
 	protected void onResume() {
@@ -107,6 +101,8 @@ public class JZ_Activity extends Activity {
 		consumed = (TextView) this.findViewById(R.id.comsumed);
 		linearLayout = (LinearLayout) this.findViewById(R.id.background);
 		zyj = (TextView)this.findViewById(R.id.zyj);
+		setting  = (TextView)this.findViewById(R.id.setting);
+		zq = (TextView)this.findViewById(R.id.zq);
 		// 测试按钮
 		syButton = (Button) this.findViewById(R.id.sy);
 		kind = (TextView) this.findViewById(R.id.kind);
@@ -116,6 +112,51 @@ public class JZ_Activity extends Activity {
 		kindList.add("酒足饭饱");
 		kindList.add("斯是陋室");
 		kindList.add("踏破铁鞋");
+		
+		
+		/**
+		 * 攒钱目标测试
+		 */
+		zq.setOnClickListener(new View.OnClickListener() {
+			
+			@SuppressWarnings("static-access")
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				System.out.println("点击了攒钱目标");
+				pd =	ProgressDialog.show(JZ_Activity.this, "自爆", "自爆装置启动中，请稍后……");
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							Thread.currentThread().sleep(5000);
+							pd.dismiss();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}).start();
+			}
+		});
+		
+		
+		/**
+		 * 设置按钮事件
+		 */
+		setting.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(jzActivity, User_Activity.class);
+				startActivity(intent);
+			}
+		});
+		
+		
 		/**
 		 *攒友街 
 		 */
@@ -141,7 +182,13 @@ public class JZ_Activity extends Activity {
 				CloudSendHelper cloudSendHelper = new CloudSendHelper(dataBase);
 				try {
 					try {
-						cloudSendHelper.send();
+						if(cloudSendHelper.checkAndSend()){
+//							Toast.makeText(JZ_Activity.jzActivity, "同步成功!",
+//									Toast.LENGTH_LONG).show();
+						}else{
+							Toast.makeText(JZ_Activity.jzActivity, "同步前请登录哦！",
+									Toast.LENGTH_LONG).show();
+						}
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -406,17 +453,13 @@ public class JZ_Activity extends Activity {
 					}
 					values.put("date", date);
 					values.put("inorout", inOrOut);
-					// 打开数据库并插入
-					DataBase dataBase = new DataBase(JZ_Activity.this,
-							"user.db");
-					SQLiteDatabase db = dataBase.getWritableDatabase();
-					db.insert("test1", null, values);
+					Index_Activity.db.insert("test1", null, values);
 					// 插入后清空输入框
 					consumString = "";
 					consume.setText(consumString.toCharArray(), 0,
 							consumString.length());
-					YS_DataBaseHelper ys_DataBaseHelper = new YS_DataBaseHelper(
-							JZ_Activity.this, dataBase);
+					YS_DAO ys_DataBaseHelper = new YS_DAO(
+							JZ_Activity.this);
 
 					// 如果是支出则更新预算表，收入则更新收入表
 					if (inOrOut == 0) {
@@ -431,7 +474,7 @@ public class JZ_Activity extends Activity {
 						// db.close();
 					} else {
 						// 更新收入表
-						ys_DataBaseHelper.updatein(consume1, db);
+						ys_DataBaseHelper.updatein(consume1);
 						System.out.println("收入成功");
 						// db.close();
 					}

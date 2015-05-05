@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.activity.Street_Activity;
+import com.bean.StreetMessageBean;
 
 public class GUIManager {
 	

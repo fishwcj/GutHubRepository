@@ -13,12 +13,15 @@ import java.util.List;
 
 
 
+
+
 //import com.yyyy.yyyy.Index_Activity.MyAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTitleStrip;
@@ -28,7 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dao.DataBase;
-import com.dao.JZ_DataBaseHelper;
+import com.dao.JZ_DAO;
 import com.model.BackgroundColor;
 import com.model.Index_ContorlHelper;
 import com.model.Init;
@@ -49,18 +52,27 @@ public class Index_Activity extends Activity {
 	public static float budget;//总预算
 	LocalActivityManager manager = null;
 	public static DataBase dataBase;// 打开数据库
+	public static SQLiteDatabase db;//打开数据库连接
 	static int SIGN = 0;//第一次启动，SIGN = 0;标志位
 	int current = 0;
 	int passed = -1;
 	Index_ContorlHelper index_ContorlHelper;
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (db != null) {
+			db.close();// SQLiteDatabase sqldb;
+		}
+	}
+	
+	@Override
 	protected void onResume() {
 		super.onResume();
 		if (SIGN != 0) {
 			//更新记账界面预算显示
-			JZ_DataBaseHelper jz_DataBaseHelper = new JZ_DataBaseHelper();
-			jz_DataBaseHelper.updateBudgetRemain(dataBase);
+			JZ_DAO jz_DataBaseHelper = new JZ_DAO();
+			jz_DataBaseHelper.updateBudgetRemain();
 			BackgroundColor backgroundColor = new BackgroundColor();
 			backgroundColor.refreshback();
 			System.out.println("调用了resum");
@@ -76,6 +88,7 @@ public class Index_Activity extends Activity {
 		indexActivity = this;
 		manager = new LocalActivityManager(this, true);
 		dataBase = new DataBase(Index_Activity.this, "user.db");
+		db = dataBase.getWritableDatabase();
 		manager.dispatchCreate(savedInstanceState);
 		// 获得监听对象
 		index_ContorlHelper = new Index_ContorlHelper(Index_Activity.this, dataBase);
@@ -98,8 +111,8 @@ public class Index_Activity extends Activity {
 		views.add(getView("Count_Activity", intent_countIntent));
 		
 		//第一次启动更新记账界面预算显示
-		JZ_DataBaseHelper jz_DataBaseHelper = new JZ_DataBaseHelper();
-		jz_DataBaseHelper.updateBudgetRemain(dataBase);
+		JZ_DAO jz_DataBaseHelper = new JZ_DAO();
+		jz_DataBaseHelper.updateBudgetRemain();
 		
 		viewPager.setAdapter(new MyAdapter());
 		try {

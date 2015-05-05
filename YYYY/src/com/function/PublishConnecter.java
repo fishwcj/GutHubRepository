@@ -10,6 +10,7 @@ import java.net.URLConnection;
 
 import com.activity.Publish_Activity;
 import com.activity.Street_Activity;
+import com.bean.StreetMessageBean;
 
 import android.content.Intent;
 import android.os.StrictMode;

@@ -3,9 +3,10 @@ package com.model;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-//import java.net.HttpURLConnection;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -17,27 +18,32 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 //import android.provider.CalendarContract.Reminders;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.widget.Toast;
 
 import com.activity.JZ_Activity;
+import com.bean.CloudData;
 import com.dao.DataBase;
-import com.dao.SearchCloudData;
+import com.dao.SySearch_DAO;
 
 public class CloudSendHelper {
 
-	DataBase dataBase;
-	CloudData cloudData = new CloudData();
-	SearchCloudData search;
-	Cursor cursor;
-	String currentString;
-	String currentStringShort;
+	private DataBase dataBase;
+	private CloudData cloudData = new CloudData();
+	private SySearch_DAO search;
+	private Cursor cursor;
+	@SuppressWarnings("unused")
+	private String currentString;
+	private String currentStringShort;
+	private IsLogin IsLogin;
 
 	@SuppressLint("SimpleDateFormat")
 	public CloudSendHelper(DataBase dataBase) {
 		this.dataBase = dataBase;
-		this.search = new SearchCloudData(dataBase);
-
+		this.search = new SySearch_DAO();
+		this.IsLogin = new IsLogin();
 		// 获得当前日期 xxxx-xx
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		currentString = format.format(new Date());
@@ -47,63 +53,97 @@ public class CloudSendHelper {
 	}
 
 	/**
+	 * 检查是否登陆，登陆后同步，否则提醒登陆
+	 * 
+	 * @return
+	 * @throws MalformedURLException
+	 * @throws ClassNotFoundException
+	 */
+	public boolean checkAndSend() throws MalformedURLException,
+			ClassNotFoundException {
+		boolean ok = false;
+		if (IsLogin.isLogin(dataBase)) {
+			ok = send();
+		}
+		return ok;
+	}
+
+	/**
 	 * 链接服务器并发送cloudData对象
 	 * 
 	 * @return
 	 * @throws MalformedURLException
 	 * @throws ClassNotFoundException
 	 */
+	@SuppressLint("ShowToast")
 	public boolean send() throws MalformedURLException, ClassNotFoundException {
 		boolean tag = false;
-		new Thread(){
-			public void run(){
-		
-		// 封装对象
-		setcloudData();
-		URL url = null;
-		try {
-			url = new URL("http://192.168.191.1:8080/Bill/servlet/Receive");
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			// 链接
+		new Thread() {
+			public void run() {
 
-			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-					.detectDiskReads().detectDiskWrites().detectNetwork()
-					.penaltyLog().build());
-			System.out.println("开始连接");
-			URLConnection con = url.openConnection();
-			System.out.println("打开连接");
-			con.setDoInput(true);
-			con.setDoOutput(true);
-			con.setConnectTimeout(50000);
-			System.out.println("尝试连接");
-			con.connect();
-			System.out.println("链接成功!");
-			// 发送数据
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					new BufferedOutputStream(con.getOutputStream()));
-			objectOutputStream.writeObject(cloudData);
-			objectOutputStream.flush();
-			objectOutputStream.close();
-			System.out.println("发送成功");
+				// 封装对象
+				setcloudData();
+				URL url = null;
+				HttpURLConnection con = null;
+				try {
+					url = new URL(
+							"http://192.168.191.1:8080/Bill/servlet/ReceiveServlet");
+				} catch (MalformedURLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					System.out.println("创建url失败");
+				}
+				try {
+					// 链接
 
-			ObjectInputStream objectInputStream = new ObjectInputStream(
-					new BufferedInputStream(con.getInputStream()));
-			Object obj = objectInputStream.readObject();
-			System.out.println(obj);
-			objectInputStream.close();
-			Toast.makeText(JZ_Activity.jzActivity, "同步成功!",
-					Toast.LENGTH_LONG).show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+					StrictMode
+							.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+									.detectDiskReads().detectDiskWrites()
+									.detectNetwork().penaltyLog().build());
+					con = (HttpURLConnection) url.openConnection();
+					con.setDoInput(true);
+					con.setDoOutput(true);
+					con.setUseCaches(false);
+					con.setRequestProperty("Content-Type",
+							"application/x-java-serialized-object");
+					con.setRequestMethod("POST");
+					con.setConnectTimeout(3000);
+					System.out.println("尝试连接");
+					con.connect();
+					// 发送数据
+					ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+							con.getOutputStream());
+					objectOutputStream.writeObject(cloudData);
+					objectOutputStream.flush();
+					System.out.println("发送成功");
+					System.out.println("返回码:" + con.getResponseCode());
+					InputStream ist = con.getInputStream();
+
+					ObjectInputStream objectInputStream = new ObjectInputStream(
+							ist);
+					Object obj = objectInputStream.readObject();
+					System.out.println(obj);
+					objectInputStream.close();
+					objectOutputStream.close();
+					Looper.prepare();
+					new Handler(Looper.getMainLooper());
+					Toast.makeText(JZ_Activity.jzActivity, "同步成功！",
+							Toast.LENGTH_SHORT).show();
+					Looper.loop();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("链接服务器失败");
+					Looper.prepare();
+					new Handler(Looper.getMainLooper());
+					Toast.makeText(JZ_Activity.jzActivity, "咦？网络开小差了~",
+							Toast.LENGTH_SHORT).show();
+					Looper.loop();
+					con.disconnect();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			};
 		}.start();
 		tag = true;
@@ -116,6 +156,9 @@ public class CloudSendHelper {
 	 * @param cloudData
 	 */
 	public void setcloudData() {
+
+		// 封装用户id
+		cloudData.setUserNameID(search.searchId());
 
 		// 封装流水
 		cursor = search.searchStreamCount();
@@ -171,8 +214,8 @@ public class CloudSendHelper {
 		} else {
 			System.out.println("未读取到收入");
 		}
-		
-		//更新同步时间
+
+		// 更新同步时间
 		search.updateTime();
 		System.out.println("传输对象准备完毕！");
 	}

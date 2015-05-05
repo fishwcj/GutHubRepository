@@ -17,15 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.activity.Stream_Activity;
-import com.dao.LS_DataBaseHelper;
+import com.dao.LS_DAO;
 import com.yyyy.yyyy.R;
 
 public class LSManager {
-	private LS_DataBaseHelper ls_DataBaseHelper;
+	private LS_DAO ls_DataBaseHelper;
 	LinearLayout[][] linearLayoutChild;
 	int i = 0;
 
-	public LSManager(LS_DataBaseHelper ls_DataBaseHelper) {
+	public LSManager(LS_DAO ls_DataBaseHelper) {
 		// TODO Auto-generated constructor stub
 		this.ls_DataBaseHelper = ls_DataBaseHelper;
 	}

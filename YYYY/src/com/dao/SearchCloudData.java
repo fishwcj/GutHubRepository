@@ -22,8 +22,20 @@ public class SearchCloudData {
 	public SearchCloudData(DataBase dataBase){
 		db = dataBase.getWritableDatabase();
 	}
-	
-	
+
+	/**
+	 * 得到id
+	 * @return
+	 */
+	public String searchId(){
+		String id = "";
+		sql = "select id from user";
+		cursor = db.rawQuery(sql, null);
+		if(cursor.moveToNext()){
+			id = cursor.getString(1);
+		}
+		return id;
+	}
 	/**
 	 * 查询得到新增流水
 	 * @param time	上次同步的时间

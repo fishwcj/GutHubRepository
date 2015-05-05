@@ -10,6 +10,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+import com.activity.Street_Activity;
+import com.bean.SrStreetBeanList;
+import com.bean.StreetMessageBean;
+
 import android.os.StrictMode;
 
 //import android.os.StrictMode;
@@ -33,7 +37,7 @@ public class StreetConnecter{
 			System.out.println("打开连接");
 			con.setDoInput(true);
 			con.setDoOutput(true);
-			con.setConnectTimeout(50000);
+			con.setConnectTimeout(5000);
 			System.out.println("尝试连接");
 			con.connect();
 			System.out.println("链接成功!");
@@ -61,6 +65,8 @@ public class StreetConnecter{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			StreetGUI streetGUI = new StreetGUI(Street_Activity.rootlinearLayout);
+			streetGUI.createErrorGUI();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
