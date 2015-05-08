@@ -1,5 +1,7 @@
 package com.activity;
 
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,18 +13,20 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.function.StreetConnecter;
+
+import com.bean.StreetMessageBean;
+import com.model.street.StreetConnecter;
 import com.yyyy.yyyy.R;
 
 public class Street_Activity extends Activity {
 	public static Activity street_Activity;
 	public static LinearLayout rootlinearLayout;
+	public static ArrayList<StreetMessageBean> MessageBeanlist;
 	private SwipeRefreshLayout swipeView;
 	private ScrollView scrollView;
 	private TextView bj;
 	private TextView sjz;
 
-	// public static ArrayList<StreetMessageBean> messageBeans;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

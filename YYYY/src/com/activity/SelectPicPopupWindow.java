@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.model.ConsumKindManager;
+import com.logic.ConsumKindManager;
 import com.yyyy.yyyy.R;
 
 public class SelectPicPopupWindow extends Activity implements OnClickListener {
@@ -36,7 +36,7 @@ public class SelectPicPopupWindow extends Activity implements OnClickListener {
         xing = (TextView)this.findViewById(R.id.xing);
         layout = (LinearLayout)this.findViewById(R.id.two);
         kind = (TextView)JZ_Activity.jzActivity.findViewById(R.id.kind);
-        consumKindManager = new ConsumKindManager(SelectPicPopupWindow.this);
+        consumKindManager = new ConsumKindManager();
         
         /**
          * ÒÂ °´Å¥ÊÂ¼þ

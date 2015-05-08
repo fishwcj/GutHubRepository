@@ -16,6 +16,7 @@ public class StreetMessageBean implements Serializable  {
 	private String tag;	//±Í«©
 	private float price;
 	private String userID;
+
 	public String getUserID() {
 		return userID;
 	}

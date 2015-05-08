@@ -43,7 +43,7 @@ public class DataBase extends SQLiteOpenHelper {
 		currentString = format.format(new Date());
 
 		// 测试表2流水表：包括 消费、类型、时间
-		db.execSQL("create table test1(consume float, kind varchar(20), date datetime, inorout int)");
+		db.execSQL("create table stream(consume float, kind varchar(20), id int, date datetime, inorout int)");
 		// 测试表3预算表
 		String sql = "create table tablebudget(budget float, kind int, remain float, month date)";
 		db.execSQL(sql);

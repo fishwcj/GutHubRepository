@@ -1,7 +1,7 @@
 package com.activity;
 
-import com.function.CreateMessageBean;
-import com.function.PublishConnecter;
+import com.model.street.CreateMessageBean;
+import com.model.street.PublishConnecter;
 import com.yyyy.yyyy.R;
 
 import android.app.Activity;
@@ -45,7 +45,6 @@ public class Publish_Activity extends Activity {
 		 */
 		getAddress.setOnClickListener(new View.OnClickListener() {
 
-			@SuppressWarnings("static-access")
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub

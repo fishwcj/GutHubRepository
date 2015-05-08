@@ -20,10 +20,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
-
-import com.dao.DataBase;
 import com.dao.YS_DAO;
-import com.model.BackgroundColor;
+import com.logic.BackgroundColor;
 import com.yyyy.yyyy.R;
 
 @SuppressLint("NewApi")
@@ -81,7 +79,6 @@ public class YS_Activity extends Activity {
 	private YS_DAO yS_handler;
 	private Cursor cursor;
 	// private int i = 0;
-	DataBase dataBase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -152,8 +149,7 @@ public class YS_Activity extends Activity {
 		kind_list.add(2);
 		kind_list.add(3);
 		kind_list.add(4);
-		dataBase = new DataBase(YS_Activity.this, "user.db");
-		yS_handler = new YS_DAO(YS_Activity.this);
+		yS_handler = new YS_DAO();
 		// 从数据库中获取每种类型的预算值
 		cursor = yS_handler.read_budget();
 		// 读取游标的索引
@@ -424,8 +420,7 @@ public class YS_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// 首先插入到数据库，再结束此activity
-				YS_DAO ysHelper = new YS_DAO(
-						YS_Activity.this);
+				YS_DAO ysHelper = new YS_DAO();
 				// 得到有多少个类别
 				int numberOfKind = show_list.size();
 				float[] budget = new float[numberOfKind];

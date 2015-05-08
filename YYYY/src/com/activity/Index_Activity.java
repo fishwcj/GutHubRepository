@@ -15,6 +15,11 @@ import java.util.List;
 
 
 
+
+
+
+
+
 //import com.yyyy.yyyy.Index_Activity.MyAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -32,9 +37,11 @@ import android.view.ViewGroup;
 
 import com.dao.DataBase;
 import com.dao.JZ_DAO;
-import com.model.BackgroundColor;
-import com.model.Index_ContorlHelper;
-import com.model.Init;
+import com.dao.basic.BasicDAO;
+import com.inteface.IBasicDAO;
+import com.logic.BackgroundColor;
+import com.logic.Index_ContorlHelper;
+import com.model.user.Init;
 import com.yyyy.yyyy.R;
 
 @SuppressWarnings("deprecation")
@@ -53,6 +60,7 @@ public class Index_Activity extends Activity {
 	LocalActivityManager manager = null;
 	public static DataBase dataBase;// 打开数据库
 	public static SQLiteDatabase db;//打开数据库连接
+	public static IBasicDAO basicDAO = null;
 	static int SIGN = 0;//第一次启动，SIGN = 0;标志位
 	int current = 0;
 	int passed = -1;
@@ -87,8 +95,11 @@ public class Index_Activity extends Activity {
 		context = Index_Activity.this;
 		indexActivity = this;
 		manager = new LocalActivityManager(this, true);
-		dataBase = new DataBase(Index_Activity.this, "user.db");
-		db = dataBase.getWritableDatabase();
+//		dataBase = new DataBase(Index_Activity.this, "user.db");
+//		db = dataBase.getWritableDatabase();
+		basicDAO = new BasicDAO();
+		basicDAO.connectDataBase("user.db");
+		
 		manager.dispatchCreate(savedInstanceState);
 		// 获得监听对象
 		index_ContorlHelper = new Index_ContorlHelper(Index_Activity.this, dataBase);
@@ -117,7 +128,7 @@ public class Index_Activity extends Activity {
 		viewPager.setAdapter(new MyAdapter());
 		try {
 			@SuppressWarnings("unused")
-			Init init = new Init(context);
+			Init init = new Init();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			System.out.println("初始化报错");

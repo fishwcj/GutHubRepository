@@ -5,21 +5,19 @@
  */
 package com.dao;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import com.activity.Index_Activity;
-
-import android.app.Activity;
 import android.database.Cursor;
 
-public class TJ_DAO {
-	Activity manager;
-	// DataBase dataBase;
-	String tablename = "test1";
+import com.activity.Index_Activity;
+import com.dao.basic.SQLString;
 
-	public TJ_DAO(Activity manager) {
-		this.manager = manager;
+public class TJ_DAO {
+	
+	//String tablename = "test1";
+
+	public TJ_DAO() {
+		
 	}
 
 	/**
@@ -33,15 +31,21 @@ public class TJ_DAO {
 		Cursor cursor1;
 		float item;
 		float total = 0;
-		float percent;
-		BigDecimal b, b1;
+		//float percent;
+		//BigDecimal b, b1;
 		perc_List = new ArrayList<Float>();
-		String sql = "select totalbudget-remain as total_consume from tabletotalbudget";
-		cursor1 = Index_Activity.db.rawQuery(sql, null);
+//		String sql = "select totalbudget-remain as total_consume from tabletotalbudget";
+//		cursor1 = Index_Activity.db.rawQuery(sql, null);
+//		while (cursor1.moveToNext()) {
+//			total = cursor1.getFloat(cursor1.getColumnIndex("total_consume"));
+//		}
+//		cursor1.close();
+		String sql = SQLString.getConsume_Tj();//从总预算表中查询已消费金额
+		cursor1 = (Cursor)Index_Activity.basicDAO.selectCursor(sql);
 		while (cursor1.moveToNext()) {
-			total = cursor1.getFloat(cursor1.getColumnIndex("total_consume"));
-		}
-		cursor1.close();
+		total = cursor1.getFloat(cursor1.getColumnIndex("total_consume"));
+	}
+	cursor1.close();
 		if (total == 0) {
 			perc_List.add(total);
 			perc_List.add(total);
@@ -49,21 +53,33 @@ public class TJ_DAO {
 			perc_List.add(total);
 
 		} else {
-			sql = "select budget-remain as sum_consume from tablebudget ";
-			cursor = Index_Activity.db.rawQuery(sql, null);
+//			sql = "select budget-remain as sum_consume from tablebudget ";
+//			cursor = Index_Activity.db.rawQuery(sql, null);
+			sql = SQLString.getConsume1_Tj();//从分类预算表中查询已消费金额
+			cursor = (Cursor)Index_Activity.basicDAO.selectCursor(sql);
 			while (cursor.moveToNext()) {
 				item = cursor.getFloat(cursor.getColumnIndex("sum_consume"));
-				b = new BigDecimal(item / total);
-				percent = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
-				b1 = new BigDecimal(percent * 360);
-				percent = b1.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
-				System.out.println("百分比" + percent);
-				// 保留两位有效数字
 
-				perc_List.add(percent);
+
+				perc_List.add(item);
 			}
 			cursor.close();
 		}
 		return perc_List;
+	}
+	public ArrayList<Float> getconsume(String type) {
+		ArrayList<Float> consumeList = new ArrayList<Float>();
+		Cursor cursor;
+		float item;
+//		String sql = "select consume from test1 where kind = '"+type+"' order by date asc";
+//		cursor = Index_Activity.db.rawQuery(sql, null);
+		String sql = SQLString.getConsume_Tj(type);
+		cursor = (Cursor)Index_Activity.basicDAO.selectCursor(sql);
+		
+		while(cursor.moveToNext()){
+			item = cursor.getFloat(cursor.getColumnIndex("consume"));
+			consumeList.add(item);
+		}
+		return consumeList;
 	}
 }

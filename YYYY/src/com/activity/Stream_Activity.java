@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dao.LS_DAO;
-import com.model.LSManager;
+import com.model.stream.LSManager;
 import com.yyyy.yyyy.R;
 
 public class Stream_Activity extends Activity {

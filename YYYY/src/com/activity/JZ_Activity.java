@@ -12,10 +12,12 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import com.dao.DataBase;
+import com.dao.JZ_DAO;
 import com.dao.YS_DAO;
-import com.model.BackgroundColor;
-import com.model.CloudSendHelper;
+import com.inteface.IInputCheck;
+import com.logic.BackgroundColor;
+import com.mnitools.InputCheck;
+import com.model.cloud.CloudSendHelper;
 import com.yyyy.yyyy.R;
 
 import android.annotation.SuppressLint;
@@ -31,7 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class JZ_Activity extends Activity {
+public class JZ_Activity extends Activity{
 
 	public static TextView budgetRemain;
 	private TextView kind;
@@ -53,7 +55,7 @@ public class JZ_Activity extends Activity {
 	private Button button_ok;
 	private Button number_float;
 	private Button number_clear;
-	private String consumString = "";
+	public static String consumString = "";
 	public static TextView consumed;
 	public static LinearLayout linearLayout;
 	private int inOrOut = 0; // 0代表支出，1代表收入，默认支出
@@ -100,9 +102,9 @@ public class JZ_Activity extends Activity {
 		button_ok = (Button) this.findViewById(R.id.ok);
 		consumed = (TextView) this.findViewById(R.id.comsumed);
 		linearLayout = (LinearLayout) this.findViewById(R.id.background);
-		zyj = (TextView)this.findViewById(R.id.zyj);
-		setting  = (TextView)this.findViewById(R.id.setting);
-		zq = (TextView)this.findViewById(R.id.zq);
+		zyj = (TextView) this.findViewById(R.id.zyj);
+		setting = (TextView) this.findViewById(R.id.setting);
+		zq = (TextView) this.findViewById(R.id.zq);
 		// 测试按钮
 		syButton = (Button) this.findViewById(R.id.sy);
 		kind = (TextView) this.findViewById(R.id.kind);
@@ -112,21 +114,35 @@ public class JZ_Activity extends Activity {
 		kindList.add("酒足饭饱");
 		kindList.add("斯是陋室");
 		kindList.add("踏破铁鞋");
-		
+
+		final IInputCheck inputCheck = new InputCheck(consume, consumString);//输入检测接口回调
+		inputCheck.setLisener_number(number_0, "0");
+		inputCheck.setLisener_number(number_1, "1");
+		inputCheck.setLisener_number(number_2, "2");
+		inputCheck.setLisener_number(number_3, "3");
+		inputCheck.setLisener_number(number_4, "4");
+		inputCheck.setLisener_number(number_5, "5");
+		inputCheck.setLisener_number(number_6, "6");
+		inputCheck.setLisener_number(number_7, "7");
+		inputCheck.setLisener_number(number_8, "8");
+		inputCheck.setLisener_number(number_9, "9");
+		inputCheck.setLisener_clear(number_clear);
+		inputCheck.setLisener_float(number_float, ".");
 		
 		/**
 		 * 攒钱目标测试
 		 */
 		zq.setOnClickListener(new View.OnClickListener() {
-			
+
 			@SuppressWarnings("static-access")
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				System.out.println("点击了攒钱目标");
-				pd =	ProgressDialog.show(JZ_Activity.this, "自爆", "自爆装置启动中，请稍后……");
+				pd = ProgressDialog.show(JZ_Activity.this, "自爆",
+						"自爆装置启动中，请稍后……");
 				new Thread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
@@ -141,13 +157,12 @@ public class JZ_Activity extends Activity {
 				}).start();
 			}
 		});
-		
-		
+
 		/**
 		 * 设置按钮事件
 		 */
 		setting.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -155,21 +170,21 @@ public class JZ_Activity extends Activity {
 				startActivity(intent);
 			}
 		});
-		
-		
+
 		/**
-		 *攒友街 
+		 * 攒友街
 		 */
 		zyj.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(JZ_Activity.this, Street_Activity.class);
+				Intent intent = new Intent(JZ_Activity.this,
+						Street_Activity.class);
 				startActivity(intent);
 			}
 		});
-		
+
 		/**
 		 * 测试同步按钮
 		 */
@@ -178,14 +193,13 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				DataBase dataBase = new DataBase(JZ_Activity.this, "user.db");
-				CloudSendHelper cloudSendHelper = new CloudSendHelper(dataBase);
+				CloudSendHelper cloudSendHelper = new CloudSendHelper();
 				try {
 					try {
-						if(cloudSendHelper.checkAndSend()){
-//							Toast.makeText(JZ_Activity.jzActivity, "同步成功!",
-//									Toast.LENGTH_LONG).show();
-						}else{
+						if (cloudSendHelper.checkAndSend()) {
+							// Toast.makeText(JZ_Activity.jzActivity, "同步成功!",
+							// Toast.LENGTH_LONG).show();
+						} else {
 							Toast.makeText(JZ_Activity.jzActivity, "同步前请登录哦！",
 									Toast.LENGTH_LONG).show();
 						}
@@ -244,189 +258,6 @@ public class JZ_Activity extends Activity {
 		});
 
 		/**
-		 * 按钮0的事件
-		 */
-		number_0.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "0";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-
-		/**
-		 * 按钮1的事件
-		 */
-		number_1.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "1";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-		/**
-		 * 按钮2的事件
-		 */
-		number_2.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "2";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-		/**
-		 * 按钮3的事件
-		 */
-		number_3.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "3";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-		/**
-		 * 按钮4的事件
-		 */
-		number_4.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "4";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-		/**
-		 * 按钮5的事件
-		 */
-		number_5.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "5";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-		/**
-		 * 按钮6的事件
-		 */
-		number_6.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "6";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-		/**
-		 * 按钮7的事件
-		 */
-		number_7.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "7";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-		/**
-		 * 按钮8的事件
-		 */
-		number_8.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "8";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-		/**
-		 * 按钮9的事件
-		 */
-		number_9.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) { // 检测输入是否合法
-					consumString += "9";
-					consume.setText(consumString.toCharArray(), 0,
-							consumString.length());
-				}
-			}
-		});
-		/**
-		 * 按钮.的事件
-		 */
-		number_float.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (check(consumString)) {
-					if (consumString.length() > 0
-							&& (consumString.indexOf(".") < 0)) {
-						consumString = consume.getText().toString() + ".";
-						consume.setText(consumString.toCharArray(), 0,
-								consumString.length());
-					}
-				}
-			}
-		});
-		/**
-		 * 按钮C的事件
-		 */
-		number_clear.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				consumString = "";
-				consume.setText(consumString.toCharArray(), 0,
-						consumString.length());
-			}
-		});
-
-		/**
 		 * 按钮ok的事件
 		 */
 		button_ok.setOnClickListener(new View.OnClickListener() {
@@ -435,36 +266,39 @@ public class JZ_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				consumString = consume.getText().toString();
 				if (consumString.length() > 0) {
-					ContentValues values = new ContentValues();
-					// 获得时间
+//					ContentValues values = new ContentValues();
 					SimpleDateFormat sDateFormat = new SimpleDateFormat(
-							"yyyy-MM-dd hh:mm:ss");
+							"yyyy-MM-dd hh:mm:ss");	
 					String date = sDateFormat.format(new java.util.Date());
-					// 字符串转换为浮点数
 					float consume1 = Float.parseFloat(consumString);
-					// 插入数据， 注意值的类型要匹配
-					values.put("consume", consume1);
+					String kind = null;
+//					values.put("consume", consume1);					// 插入数据， 注意值的类型要匹配
 					// 从ArrayList里面找到类型的中文描述
 					if (inOrOut == 0)
-						values.put("kind", kindList.get(consumekind));
+						kind = kindList.get(consumekind);
+//						values.put("kind", kindList.get(consumekind));
 					else {
-						values.put("kind", "收入");
+						kind = "收入";
+//						values.put("kind", "收入");
 					}
-					values.put("date", date);
-					values.put("inorout", inOrOut);
-					Index_Activity.db.insert("test1", null, values);
-					// 插入后清空输入框
-					consumString = "";
+//					values.put("date", date);
+//					values.put("inorout", inOrOut);
+//					values.put("id", consumekind);
+//					Index_Activity.db.insert("stream", null, values);
+					JZ_DAO.insertStream(consume1, kind, date, inOrOut, consumekind);
+					consumString = "";					// 插入后清空输入框
 					consume.setText(consumString.toCharArray(), 0,
 							consumString.length());
-					YS_DAO ys_DataBaseHelper = new YS_DAO(
-							JZ_Activity.this);
+					YS_DAO ys_DataBaseHelper = new YS_DAO();
 
 					// 如果是支出则更新预算表，收入则更新收入表
 					if (inOrOut == 0) {
 						// 同时更新数据库2张预算表
+						System.out.println("更新前");
 						ys_DataBaseHelper.update(consume1, consumekind);
+						System.out.println("更新后");
 						// 更新显示余额
 						Float remain = Float.parseFloat(budgetRemain.getText()
 								.toString());
@@ -485,6 +319,7 @@ public class JZ_Activity extends Activity {
 				String consumed = new DecimalFormat("0.0")
 						.format(Index_Activity.budget - Index_Activity.remain);
 				JZ_Activity.consumed.setText(consumed);
+				inputCheck.setViewString("");
 				Toast.makeText(JZ_Activity.this, "成功记入一笔!", Toast.LENGTH_LONG)
 						.show();
 			}
@@ -500,29 +335,5 @@ public class JZ_Activity extends Activity {
 				startActivity(intent);
 			}
 		});
-
-	}
-
-	/**
-	 * 检测输入是否合法
-	 * 
-	 * @param consumeString
-	 *            编辑栏字符串
-	 * @return
-	 */
-	public boolean check(String consumeString) {
-		boolean TAG = false;
-		// 浮点数
-		if (consumeString.contains(".")) {
-			if (consumeString.indexOf(".") < 4
-					|| (consumeString.length() - consumeString.indexOf(".")) < 3) {
-				TAG = true;
-			}
-		} else {// 整数
-			if (consumeString.length() < 6) {
-				TAG = true;
-			}
-		}
-		return TAG;
 	}
 }

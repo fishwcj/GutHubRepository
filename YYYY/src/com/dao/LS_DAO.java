@@ -2,6 +2,7 @@ package com.dao;
 
 //import android.app.Activity;
 import com.activity.Index_Activity;
+import com.dao.basic.SQLString;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -23,14 +24,17 @@ public class LS_DAO {
 	 * @return
 	 */
 	public Cursor selectAllAccount(String dateString) {
-//		SQLiteDatabase db = dataBase.getReadableDatabase();
-		String sql = "select consume, kind, date, inorout from test1 where date >= '"
-				+ dateString
-				+ "' and date < date('"
-				+ dateString
-				+ "', '+1 month') order by date desc";
-		System.out.println("sql Óï¾äÊÇ" + sql);
-		Cursor cursor = Index_Activity.db.rawQuery(sql, null);
+		
+//		String sql = "select consume, kind, date, inorout from stream where date >= '"
+//				+ dateString
+//				+ "' and date < date('"
+//				+ dateString
+//				+ "', '+1 month') order by date desc";
+//		System.out.println("sql Óï¾äÊÇ" + sql);
+//		ISelect selecter = new SelectCursor(Index_Activity.db);
+//		Cursor cursor = (Cursor)selecter.select(sql);
+		String sql = SQLString.getSelectAllAccount_LS(dateString);
+		Cursor cursor = (Cursor)Index_Activity.basicDAO.selectCursor(sql);
 		return cursor;
 	}
 }
