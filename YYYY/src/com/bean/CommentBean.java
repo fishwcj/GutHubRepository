@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class CommentBean implements Serializable  {
 
 	private static final long serialVersionUID = 1L;
-	private String imessageid;
-	private String iuserid;
+	private int imessageid;//被评论的信息
+	private String iuserid;//被评论的用户id
 	private String iuserName;
 	private String commentid;
 	private String userid;
@@ -14,11 +14,11 @@ public class CommentBean implements Serializable  {
 	private String content;
 	private String time;
 	
-	public String getImessageid() {
+	public int getImessageid() {
 		return imessageid;
 	}
 	
-	public void setImessageid(String imessageid) {
+	public void setImessageid(int imessageid) {
 		this.imessageid = imessageid;
 	}
 	

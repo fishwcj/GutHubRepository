@@ -2,6 +2,7 @@ package com.dao.basic;
 
 import com.activity.Index_Activity;
 import com.dao.DataBase;
+import com.dao.UserDataBase;
 import com.inteface.IBasicDAO;
 
 import android.database.Cursor;
@@ -10,23 +11,32 @@ import android.database.Cursor;
  */
 import android.database.sqlite.SQLiteDatabase;
 
-public class BasicDAO implements IBasicDAO{
+public class BasicDAO implements IBasicDAO {
 
-	private static SQLiteDatabase db = null;
+	public SQLiteDatabase db = null;
 
 	/**
 	 * 连接sqlite数据库
+	 * 
 	 * @return
 	 */
-	public boolean connectDataBase(String dbName) {
+	public boolean connectDataBase(String dbname) {
 		boolean tag = false;
-		DataBase dataBase = new DataBase(Index_Activity.indexActivity, dbName);
-		db = dataBase.getWritableDatabase();
-		if (db != null)
-			tag = true;
+		UserDataBase userDataBase = new UserDataBase(Index_Activity.indexActivity, "index.db");
+		SQLiteDatabase index_db = userDataBase.getWritableDatabase();
+		String sql = "select dbname from user_now";
+		Cursor userdb = index_db.rawQuery(sql, null);
+		if(userdb.moveToNext()){
+			String dbnameString = userdb.getString(0);
+			System.out.println("打开的数据库是 " + dbnameString);
+			DataBase dataBase = new DataBase(Index_Activity.indexActivity, dbnameString);
+			db = dataBase.getWritableDatabase();
+			if (db != null)
+				tag = true;
+		}
 		return tag;
 	}
-	
+
 	public Cursor selectCursor(String sql) {
 		Cursor cursor = null;
 		if (isConnect())
@@ -117,5 +127,12 @@ public class BasicDAO implements IBasicDAO{
 	public boolean isConnect() {
 		boolean tag = (db != null) ? true : false;
 		return tag;
+	}
+
+	@Override
+	public void closeDB() {
+		if (isConnect()){
+			db.close();
+		}
 	}
 }

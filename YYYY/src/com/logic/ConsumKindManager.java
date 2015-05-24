@@ -41,7 +41,6 @@ public class ConsumKindManager {
 	@SuppressLint("NewApi")
 	public void freshButton(int mainkind, LinearLayout layout) {
 		layout.removeAllViews();
-//		String sql = "select kindname from kind where firstid = " + mainkind;
 		String sql = SQLString.getFreshButton_Co(mainkind);
 		Cursor cursor = (Cursor)Index_Activity.basicDAO.selectCursor(sql);
 		int number = cursor.getCount();
@@ -60,8 +59,8 @@ public class ConsumKindManager {
 			textView[i].setText(kindname);
 			textView[i].setBackground(drawable);
 			textView[i].setLayoutParams(LP_FW);
+			textView[i].setId(number + 1);
 			textView[i].setOnClickListener(new View.OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub

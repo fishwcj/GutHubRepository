@@ -24,6 +24,7 @@ public class Publish_Activity extends Activity {
 	private EditText tag;
 	private EditText price;
 	private TextView getAddress;
+	private String adress = "";
     private LocationClient locationClient = null;  
    private static final int UPDATE_TIME = 50000;  
 	public static Activity publish_Activity;
@@ -69,7 +70,8 @@ public class Publish_Activity extends Activity {
 		                    return;  
 		                }
 		                System.out.println("地址为:"+location.getAddrStr() +"  街道：" +location.getStreet());
-		                getAddress.setText(location.getStreet());
+		                adress = location.getAddrStr();
+		                getAddress.setText(adress);
 		            }  
 		              
 		        });  
@@ -94,7 +96,7 @@ public class Publish_Activity extends Activity {
 				if (conntentString.length() > 0) {
 					CreateMessageBean creater = new CreateMessageBean();// 封装信息
 					StreetMessageBean messageBean = creater.create(
-							conntentString, tagString, priceNumber);
+							conntentString, tagString, priceNumber,adress);
 					PublishConnecter connecter = new PublishConnecter();
 					connecter.send(messageBean);
 					content.setText("");

@@ -19,6 +19,7 @@ public class GetNowDate{
 		String currentTime = "";
 		SimpleDateFormat format = new SimpleDateFormat(formString);
 		currentTime = format.format(new Date());
+		System.out.println(" ±º‰ «:" + currentTime);
 		return currentTime;
 	}
 

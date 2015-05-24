@@ -22,8 +22,7 @@ import com.yyyy.yyyy.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ContentValues;
+//import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class JZ_Activity extends Activity{
+public class JZ_Activity extends Activity {
 
 	public static TextView budgetRemain;
 	private TextView kind;
@@ -59,12 +58,14 @@ public class JZ_Activity extends Activity{
 	public static TextView consumed;
 	public static LinearLayout linearLayout;
 	private int inOrOut = 0; // 0代表支出，1代表收入，默认支出
-	public static int consumekind = 2; // 消费类别参数（默认为食）
+	public static int consumekind = 1; // 消费类别参数（默认为食）
 	private ArrayList<String> kindList = new ArrayList<String>();
 	public static Activity jzActivity;
 	private TextView zyj;
 	private TextView zq;
-	private ProgressDialog pd;
+	private TextView jd;
+
+	// private ProgressDialog pd;
 
 	@Override
 	protected void onResume() {
@@ -105,6 +106,7 @@ public class JZ_Activity extends Activity{
 		zyj = (TextView) this.findViewById(R.id.zyj);
 		setting = (TextView) this.findViewById(R.id.setting);
 		zq = (TextView) this.findViewById(R.id.zq);
+		jd = (TextView) this.findViewById(R.id.jd);
 		// 测试按钮
 		syButton = (Button) this.findViewById(R.id.sy);
 		kind = (TextView) this.findViewById(R.id.kind);
@@ -115,7 +117,7 @@ public class JZ_Activity extends Activity{
 		kindList.add("斯是陋室");
 		kindList.add("踏破铁鞋");
 
-		final IInputCheck inputCheck = new InputCheck(consume, consumString);//输入检测接口回调
+		final IInputCheck inputCheck = new InputCheck(consume, consumString);// 输入检测接口回调
 		inputCheck.setLisener_number(number_0, "0");
 		inputCheck.setLisener_number(number_1, "1");
 		inputCheck.setLisener_number(number_2, "2");
@@ -128,33 +130,31 @@ public class JZ_Activity extends Activity{
 		inputCheck.setLisener_number(number_9, "9");
 		inputCheck.setLisener_clear(number_clear);
 		inputCheck.setLisener_float(number_float, ".");
-		
+
 		/**
-		 * 攒钱目标测试
+		 * 借贷管理
+		 */
+		jd.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(JZ_Activity.this, Borrow_Return.class);
+				startActivity(intent);
+			}
+		});
+
+		/**
+		 * 攒钱目标
 		 */
 		zq.setOnClickListener(new View.OnClickListener() {
 
-			@SuppressWarnings("static-access")
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				System.out.println("点击了攒钱目标");
-				pd = ProgressDialog.show(JZ_Activity.this, "自爆",
-						"自爆装置启动中，请稍后……");
-				new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						try {
-							Thread.currentThread().sleep(5000);
-							pd.dismiss();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}).start();
+				Intent intent = new Intent(JZ_Activity.this,
+						Target_Activity.class);
+				JZ_Activity.this.startActivity(intent);
 			}
 		});
 
@@ -268,27 +268,21 @@ public class JZ_Activity extends Activity{
 				// TODO Auto-generated method stub
 				consumString = consume.getText().toString();
 				if (consumString.length() > 0) {
-//					ContentValues values = new ContentValues();
 					SimpleDateFormat sDateFormat = new SimpleDateFormat(
-							"yyyy-MM-dd hh:mm:ss");	
+							"yyyy-MM-dd hh:mm:ss");
 					String date = sDateFormat.format(new java.util.Date());
 					float consume1 = Float.parseFloat(consumString);
 					String kind = null;
-//					values.put("consume", consume1);					// 插入数据， 注意值的类型要匹配
 					// 从ArrayList里面找到类型的中文描述
 					if (inOrOut == 0)
-						kind = kindList.get(consumekind);
-//						values.put("kind", kindList.get(consumekind));
+						// kind = kindList.get(consumekind);
+						kind = JZ_Activity.this.kind.getText().toString();
 					else {
 						kind = "收入";
-//						values.put("kind", "收入");
 					}
-//					values.put("date", date);
-//					values.put("inorout", inOrOut);
-//					values.put("id", consumekind);
-//					Index_Activity.db.insert("stream", null, values);
-					JZ_DAO.insertStream(consume1, kind, date, inOrOut, consumekind);
-					consumString = "";					// 插入后清空输入框
+					JZ_DAO.insertStream(consume1, kind, date, inOrOut,
+							consumekind);
+					consumString = ""; // 插入后清空输入框
 					consume.setText(consumString.toCharArray(), 0,
 							consumString.length());
 					YS_DAO ys_DataBaseHelper = new YS_DAO();
@@ -331,7 +325,7 @@ public class JZ_Activity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(JZ_Activity.this, YS_Activity.class);
+				Intent intent = new Intent(JZ_Activity.this, YS1_Activity.class);
 				startActivity(intent);
 			}
 		});

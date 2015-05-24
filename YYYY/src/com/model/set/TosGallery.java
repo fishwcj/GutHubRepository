@@ -39,19 +39,8 @@ import android.widget.Scroller;
 import com.yyyy.yyyy.R;
 
 /**
- * A view that shows items in a center-locked, horizontally scrolling list.
- * <p>
- * The default values for the Gallery assume you will be using
- * {@link android.R.styleable#Theme_galleryItemBackground} as the background for each View given to
- * the Gallery from the Adapter. If you are not doing this, you may need to adjust some Gallery
- * properties, such as the spacing.
- * <p>
  * Views given to the Gallery should use {@link TosGallery.LayoutParams} as their layout parameters
  * type.
- * 
- * @attr ref android.R.styleable#Gallery_animationDuration
- * @attr ref android.R.styleable#Gallery_spacing
- * @attr ref android.R.styleable#Gallery_gravity
  */
 public class TosGallery extends TosAbsSpinner implements GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener {

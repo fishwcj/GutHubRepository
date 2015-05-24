@@ -67,8 +67,8 @@ public class StreetGUI {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				StreetConnecter connecter = new StreetConnecter();
-				connecter.connect();
+				Intent intent = new Intent(Street_Activity.street_Activity,Street_Activity.class);
+				Street_Activity.street_Activity.startActivity(intent);
 			}
 		});
 	}

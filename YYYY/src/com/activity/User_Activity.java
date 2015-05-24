@@ -5,14 +5,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.dao.DataBase;
 import com.logic.BackgroundColor;
+import com.model.user.IsLogin;
 import com.model.user.Regist;
 import com.yyyy.yyyy.R;
 
@@ -22,10 +21,10 @@ public class User_Activity extends Activity {
 	private TextView get;
 	private TextView name;
 	private TextView id;
-	DataBase dataBase;
 	private Button back;
 	private Button budget_set;
 	private Button week_set;
+	private TextView changeOthers;
 	@SuppressLint("DefaultLocale")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +32,35 @@ public class User_Activity extends Activity {
 		
 		
 		user_Activity = this;
-		this.dataBase = new DataBase(User_Activity.this, "user.db");
-		SQLiteDatabase db = dataBase.getWritableDatabase();
 		String sql = "select * from user";
-		Cursor cursor = db.rawQuery(sql, null);
-		int tag = 0;
-		if (cursor.moveToNext()) {
-			tag = cursor.getInt(cursor.getColumnIndex("tag"));
-		}
-		
-		// 如果已经登录则显示个人中心界面
-		boolean isOnline = (tag == 1) ? true : false;
-		if (isOnline) {
+		Cursor cursor = (Cursor)Index_Activity.basicDAO.selectCursor(sql);
+		cursor.moveToLast();
+//		int tag = 0;
+//		if (cursor.moveToLast()) {
+//			tag = cursor.getInt(cursor.getColumnIndex("tag"));
+//			System.out.println("目前用户状态是 " + cursor.getString(cursor.getColumnIndex("id")) + "   " + cursor.getString(cursor.getColumnIndex("id")) + "  " + tag);
+//		}
+//		
+//		// 如果已经登录则显示个人中心界面
+//		boolean isOnline = (tag == 1) ? true : false;
+		if (IsLogin.isLogin()) {
 			setContentView(R.layout.activity_logined);
 			name = (TextView) this.findViewById(R.id.name);
 			id = (TextView) this.findViewById(R.id.ID);
+			changeOthers = (TextView)this.findViewById(R.id.logined);
 			name.setText(cursor.getString(cursor.getColumnIndex("name")));
 			String longid = String.format("%06d", Integer.parseInt(cursor
 					.getString(cursor.getColumnIndex("id"))));
 			id.setText("ID:" + longid);
+			changeOthers.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(User_Activity.this,Login_Activity.class);
+					startActivity(intent);
+				}
+			});
 
 		} else {
 			setContentView(R.layout.activity_user);
@@ -63,7 +72,8 @@ public class User_Activity extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-
+					Intent intent = new Intent(User_Activity.this,Login_Activity.class);
+					startActivity(intent);
 				}
 			});
 

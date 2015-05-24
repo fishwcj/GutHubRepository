@@ -223,7 +223,7 @@ public abstract class TosAbsSpinner extends TosAdapterView<SpinnerAdapter> {
 
 	@Override
 	protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
-		return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+		return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 	}
 

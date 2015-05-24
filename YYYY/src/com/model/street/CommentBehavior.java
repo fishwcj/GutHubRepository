@@ -25,8 +25,8 @@ public class CommentBehavior {
 	 * @param imessageid ԭʼ��״̬id
 	 * @return
 	 */
-	public CommentBeanList getComments(String imessageid){
-		String urlString = "";
+	public CommentBeanList getComments(int imessageid){
+		String urlString = "http://192.168.191.1:8080/Bill/servlet/SearchCommentServlet";
 		CommentBeanList commentBeanList= null;
 		if(communicater.connect(urlString))
 			if(communicater.sendObject(imessageid)){
@@ -42,13 +42,13 @@ public class CommentBehavior {
 	 */
 	public boolean sendComment(CommentBean commentBean){
 		boolean tag = false;
-		String urlString = "";
+		String urlString = "http://192.168.191.1:8080/Bill/servlet/CommentServlet";
 		String ok = null;
 		if(communicater.connect(urlString))
 			if(communicater.sendObject(commentBean)){
 				ok = (String)communicater.receiveObject();
 			}
-		if(ok.equals("1"))
+		if(ok != null && ok.equals("1"))
 			tag = true;
 		return tag;
 	}

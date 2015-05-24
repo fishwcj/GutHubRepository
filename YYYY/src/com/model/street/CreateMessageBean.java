@@ -9,40 +9,30 @@ import com.bean.StreetMessageBean;
 import com.dao.User_DAO;
 
 public class CreateMessageBean {
-
-	private User_DAO user_DAO;
 	
 	public CreateMessageBean() {
-		this.user_DAO = new User_DAO();
 	}
 	
-	public StreetMessageBean create(String content,String tag, float price) {
+	public StreetMessageBean create(String content,String tag, float price,String adrs) {
 		StreetMessageBean messageBean = new StreetMessageBean();
 		messageBean.setMessage(content);
 		messageBean.setUserName(getUserName());
-		messageBean.setAddress(getAddress());
 		messageBean.setDatetime(getDate());
 		messageBean.setUserID(getUserId());
 		messageBean.setTag(tag);
 		messageBean.setPrice(price);
-		
+		messageBean.setAddress(adrs);
 		return messageBean;
 	}
 
 	private String getUserId() {
-		String userid = user_DAO.getUserId();
+		String userid = User_DAO.getUserId();
 		return userid;
 	}
 
 	private String getUserName() {
-		String name = user_DAO.getUserName();
+		String name = User_DAO.getUserName();
 		return name;
-	}
-
-	private String getAddress() {
-		String address = "中国石油大学（华东）";
-
-		return address;
 	}
 
 	@SuppressLint("SimpleDateFormat")

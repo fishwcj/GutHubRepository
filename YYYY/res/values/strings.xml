@@ -8,7 +8,7 @@
 <resources>
 
     <!-- project -->
-    <string name="app_name">YYYY</string>
+    <string name="app_name">月月有余</string>
     <string name="title_activity_ys_">YS_Activity</string>
 
     <!-- 记账 -->
@@ -30,10 +30,15 @@
     <string name="clear">c</string>
     <string name="type_consume">默认类别：食</string>
     <string name="budget_set">设置预算</string>
-    <string name="clothes1">衣--人是衣妆</string>
-    <string name="eat1">食--酒足饭饱</string>
-    <string name="house1">住--斯是陋室</string>
-    <string name="walk1">行--踏破铁鞋</string>
+    <string name="spjs">食品酒水</string>
+    <string name="yfsp">衣服饰品</string>
+    <string name="cxjt">出行交通</string>
+    <string name="jjxf">家居消费</string>
+    <string name="xxjx">学习进修</string>
+    <string name="xxyl">休闲娱乐</string>
+    <string name="rjjw">人际交往</string>
+    <string name="ylbj">医疗保健</string>
+    <string name="qtzx">其它杂项</string>
     <string name="clothes">衣</string>
     <string name="eat">食</string>
     <string name="house">住</string>
@@ -51,13 +56,14 @@
     <string name="k1">100.0</string>
     <string name="m1">1890.0</string>
     <string name="y1">345.0</string>
-	<string name="kindtest">食  > 腐败聚会</string>
-	<string name="zq">攒钱目标</string>
-	<string name="jd">借贷管理</string>
-	<string name="zyj">逛攒友街</string>
-	<string name="l">请选择消费类型</string>
-	 <string name="set">设置</string>
-	 <string name="week_set">设置当前周数</string>
+    <string name="kindtest">食品酒水  > 早午晚餐</string>
+    <string name="zq">攒钱目标</string>
+    <string name="jd">借贷管理</string>
+    <string name="zyj">逛攒友街</string>
+    <string name="l">请选择消费类型</string>
+    <string name="set">设置</string>
+    <string name="jkh">></string>
+    <string name="week_set">设置当前周数</string>
     <!-- 预算 -->
 
     <string name="total_ys">总预算</string>
@@ -93,7 +99,22 @@
     <string name="title_activity_set">SetActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>
-	<string name="title_alert">提示信息</string>
-	<string name="ok">确定</string>
-	<string name="cancel">取消</string>
+    <string name="title_alert">提示信息</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="title_activity_borrow__return">Borrow_Return</string>
+    <string name="borrow">可收入:</string>
+    <string name="money_back">需还回:</string>
+    <string name="additem">+</string>
+    <string name="title_activity_add__borrow_item">Add_Borrow_item</string>
+    <string name="add_borrow_item">新建借贷信息</string>
+    <string name="friend_name">对方昵称:</string>
+    <string name="borrow_money"> 金额 </string>
+    <string name="back_date">归还期限</string>
+    <string name="descripe">描述</string>
+    <string name="title_activity_user__list">User_List</string>
+    <string name="user">用户</string>
+    <string name="not_user">非用户</string>
+    <string name="borrow_manage">借贷管理</string>
+
 </resources>

@@ -11,6 +11,7 @@ import java.net.URL;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.StrictMode;
 import android.widget.Toast;
 
@@ -28,20 +29,15 @@ public class NetWorkCommunicate implements INetWork {
 
 	/**
 	 * 建立链接
+	 * @throws IOException 
 	 */
 	@Override
-	public boolean connect(String urlString) {
+	public boolean connect(String urlString){
 		// TODO Auto-generated method stub
 		boolean tag = false;
 		URL url = null;
 		try {
 			url = new URL(urlString);
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			System.out.println("创建url失败");
-		}
-		try {
 			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 					.detectDiskReads().detectDiskWrites().detectNetwork()
 					.penaltyLog().build());
@@ -56,16 +52,23 @@ public class NetWorkCommunicate implements INetWork {
 			System.out.println("尝试连接");
 			con.connect();//链接
 			tag = true;// 链接成功
-		} catch (IOException e) {
+		}catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			System.out.println("创建url失败");
+		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("链接服务器失败");
-			
+					
 			Looper.prepare();
-			new Handler(Looper.getMainLooper());
+			Handler handler = new Handler(Looper.getMainLooper());
+			Message msg = Message.obtain();
 			Toast.makeText(JZ_Activity.jzActivity, "咦？网络开小差了~",
 					Toast.LENGTH_SHORT).show();
-			Looper.loop();
+			msg.obj = null;
+			handler.sendMessage(msg);
+//			Looper.loop();
 			con.disconnect();
 			
 		}

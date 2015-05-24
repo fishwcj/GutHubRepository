@@ -71,12 +71,34 @@
         </activity>
         <activity android:name="org.achartengine.GraphicalActivity" >
         </activity>
+        <activity android:name="com.activity.Add_Activity" >
+        </activity>
+        <activity android:name="com.activity.AddKind_Activity" >
+        </activity>
+        <activity android:name="com.activity.FirstKind_Activity" >
+        </activity>
+        <activity android:name="com.activity.Target_Activity" >
+        </activity>
+        <activity android:name="com.activity.RestTarget_Activity" >
+        </activity>
+        <activity android:name="com.activity.Login_Activity" >
+        </activity>
+        <activity android:name="com.activity.Borrow_Return" >
+        </activity>
+        <activity android:name="com.activity.Add_Borrow_item" >
+        </activity>
+        <activity android:name="com.activity.User_List" >
+        </activity>
         <activity
             android:name="com.activity.YS_Activity"
             android:label="@string/title_activity_ys_" >
         </activity>
         <activity
             android:name="com.activity.SelectPicPopupWindow"
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity android:name="com.activity.YS1_Activity" />
+        <activity
+            android:name="com.activity.KeyBoard"
             android:theme="@style/MyDialogStyleBottom" />
 
         <service

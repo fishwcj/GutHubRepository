@@ -12,7 +12,6 @@ import com.activity.JZ_Activity;
 import com.bean.CloudData;
 import com.dao.SySearch_DAO;
 import com.inteface.INetWork;
-import com.mnitools.GetNowDate;
 import com.mnitools.NetWorkCommunicate;
 import com.model.user.IsLogin;
 
@@ -24,25 +23,24 @@ public class CloudSendHelper {
 	private CloudData cloudData = new CloudData();
 	private SySearch_DAO search;
 	private Cursor cursor;
-	private String currentStringShort;
-	private IsLogin IsLogin;
 	private INetWork communicater;
 
 	@SuppressLint("SimpleDateFormat")
 	public CloudSendHelper() {
 		this.search = new SySearch_DAO();
-		this.IsLogin = new IsLogin();
 		this.communicater = new NetWorkCommunicate();
-		currentStringShort = (new GetNowDate()).getNowDate("yyyy-mm");
 	}
 
 	/**
 	 * 设置网络链接方式（默认httpConnection链接）
-	 * @param netWorkWay 实现了INetWork的链接方式
+	 * 
+	 * @param netWorkWay
+	 *            实现了INetWork的链接方式
 	 */
-	public <T extends INetWork> void setNetWorkWay(T netWorkWay){
+	public <T extends INetWork> void setNetWorkWay(T netWorkWay) {
 		this.communicater = netWorkWay;
 	}
+
 	/**
 	 * 检查是否登陆，登陆后同步，否则提醒登陆
 	 * 
@@ -71,13 +69,13 @@ public class CloudSendHelper {
 		boolean tag = false;
 		new Thread() {
 			public void run() {
-				setcloudData();//封装对象
+				setcloudData();// 封装对象
 				String url = "http://192.168.191.1:8080/Bill/servlet/ReceiveServlet";
-				if (communicater.connect(url))//建立链接成功
-					if (communicater.sendObject(cloudData)) {//发送数据成功
-						Object responseObject = communicater.receiveObject();//读取返回对象
+				if (communicater.connect(url))// 建立链接成功
+					if (communicater.sendObject(cloudData)) {// 发送数据成功
+						Object responseObject = communicater.receiveObject();// 读取返回对象
 						System.out.println("返回对象" + responseObject.toString());
-						
+
 						Looper.prepare();
 						new Handler(Looper.getMainLooper());
 						Toast.makeText(JZ_Activity.jzActivity, "同步成功",
@@ -117,44 +115,84 @@ public class CloudSendHelper {
 		}
 
 		// 封装每月分类预算
-		cursor = search.searchBudgetByKind(currentStringShort);
-		String budget = "";
-		String remain = "";
-		String all = "";
+		// id&budget&kind&remain&month
+		cursor = search.searchBudgetByKind();
 		while (cursor.moveToNext()) {
-			budget = cursor.getString(cursor.getColumnIndex("budget"));
-			kind = cursor.getString(cursor.getColumnIndex("kind"));
-			remain = cursor.getString(cursor.getColumnIndex("remain"));
-			all = kind + "&" + budget + "&" + remain;
-			cloudData.addBudgetByKindList(all);
+			cloudData.addBudgetByKindList(cursor.getString(cursor
+					.getColumnIndex("id"))
+					+ "&"
+					+ cursor.getString(cursor.getColumnIndex("budget"))
+					+ "&"
+					+ cursor.getString(cursor.getColumnIndex("kind"))
+					+ "&"
+					+ cursor.getString(cursor.getColumnIndex("remain"))
+					+ "&"
+					+ cursor.getString(cursor.getColumnIndex("month")));
 		}
 
 		// 封装总预算
-		float totalbudget;
-		float budgetRemain;
-		cursor = search.searchBudget(currentStringShort);
+		// totalbudget&remain&month
+		cursor = search.searchBudget();
 		if (cursor.moveToNext()) {
-			totalbudget = Float.parseFloat(cursor.getString(cursor
-					.getColumnIndex("totalbudget")));
-			budgetRemain = Float.parseFloat(cursor.getString(cursor
-					.getColumnIndex("remain")));
-			cloudData.setBudget(totalbudget);
-			cloudData.setBudgetRemain(budgetRemain);
+			cloudData.addTotalbudget(cursor.getString(cursor.getColumnIndex("totalbudget"))
+					+ "&"
+					+ cursor.getString(cursor.getColumnIndex("remain"))
+					+ "&"
+					+ cursor.getString(cursor.getColumnIndex("month")));
 		} else {
 			System.out.println("读取总预算时未读到任何数据");
 		}
 
 		// 封装收入
-		float income;
-		cursor = search.searchincome(currentStringShort);
+		// mony&month
+		cursor = search.searchincome();
 		if (cursor.moveToNext()) {
-			income = Float.parseFloat(cursor.getString(cursor
-					.getColumnIndex("mony")));
-			cloudData.setincome(income);
+			cloudData.addConsumein(cursor.getString(cursor.getColumnIndex("mony"))
+					+ "&"
+					+ cursor.getString(cursor.getColumnIndex("month")));
 		} else {
 			System.out.println("未读取到收入");
 		}
 
+		// 封装时间
+		cursor = search.serchTime();
+		if (cursor.moveToNext()) {
+			cloudData.setTime(cursor.getString(cursor.getColumnIndex("lastdate"))
+					+ "&"
+					+ cursor.getString(cursor.getColumnIndex("sytime")));
+		}
+
+		// 封装消费类别
+		//id&firstid&secondid&kindname
+		cursor = search.searchKind();
+		while (cursor.moveToNext()) {
+			cloudData.addKind(cursor.getString(cursor.getColumnIndex("id"))
+							+ "&"
+							+ cursor.getString(cursor.getColumnIndex("firstid"))
+							+ "&"
+							+ cursor.getString(cursor.getColumnIndex("secondid"))
+							+ "&"
+							+ cursor.getString(cursor.getColumnIndex("kindname")));
+		}
+		
+		//封装目标
+		//id&name&time&lefttime&conten&tips&advise
+		cursor = search.searchTarget();
+		while(cursor.moveToNext()){
+			cloudData.addTarget(cursor.getString(cursor.getColumnIndex("id"))
+							+ "&"
+							+ cursor.getString(cursor.getColumnIndex("name"))
+							+ "&"
+							+ cursor.getString(cursor.getColumnIndex("time"))
+							+ "&"
+							+ cursor.getString(cursor.getColumnIndex("lefttime"))
+							+ "&"
+							+ cursor.getString(cursor.getColumnIndex("content"))
+							+ "&"
+							+ cursor.getString(cursor.getColumnIndex("tips"))
+							+ "&"
+							+ cursor.getString(cursor.getColumnIndex("advise")));
+		}
 		// 更新同步时间
 		search.updateTime();
 		System.out.println("传输对象准备完毕！");

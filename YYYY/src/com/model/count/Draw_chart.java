@@ -8,7 +8,7 @@ public class Draw_chart {
 	 * @author LLL
 	 * 调用接口类
 	 */
-	public void draw_Chart(Chart chart){
+	public static void  draw_Chart(Chart chart){
 		chart.draw();
 	}
 }

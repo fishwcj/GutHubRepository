@@ -10,14 +10,15 @@ import com.activity.Stream_Activity;
 import com.dao.DataBase;
 import com.dao.JZ_DAO;
 import com.dao.LS_DAO;
+import com.mnitools.GetNowDate;
 import com.model.count.Draw_chart;
+import com.model.count.LineChart;
 import com.model.count.PieChart;
 import com.model.stream.LSManager;
 import com.yyyy.yyyy.R;
 
 @SuppressWarnings({ "unused" })
 public class Index_ContorlHelper {
-	private DataBase dataBase;
 	private String currentString;// 当前日期
 	Context context;
 	LinearLayout[][] linearLayoutChild;
@@ -30,9 +31,8 @@ public class Index_ContorlHelper {
 	 * @param dataBase
 	 */
 	@SuppressLint("SimpleDateFormat")
-	public Index_ContorlHelper(Context context, DataBase dataBase) {
+	public Index_ContorlHelper(Context context) {
 		this.context = context;
-		this.dataBase = dataBase;
 		// 构造当前日期 xxxx-xx
 		java.util.Date currentDate = new java.util.Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
@@ -65,9 +65,13 @@ public class Index_ContorlHelper {
 			 * 画消费分析图
 			 */
 			
-			Draw_chart draw_chart = new Draw_chart();
-			PieChart pie = new PieChart();
-			draw_chart.draw_Chart(pie);
+			//获取当前日期
+			GetNowDate nowDate = new GetNowDate();
+			String now_date = nowDate.getNowDate("yyyy-MM");
+			PieChart pie = new PieChart(now_date);
+			Draw_chart.draw_Chart(pie);
+			LineChart line= new LineChart(now_date);
+			Draw_chart.draw_Chart(line);
 			
 		}
 	}

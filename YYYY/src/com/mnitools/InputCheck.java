@@ -1,7 +1,6 @@
 package com.mnitools;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import com.inteface.IInputCheck;
 
@@ -16,7 +15,7 @@ public class InputCheck implements IInputCheck {
 	}	
 	
 	@Override
-	public void setLisener_number(Button button,final String number) {
+	public void setLisener_number(View button,final String number) {
 		// TODO Auto-generated method stub
 		
 		/**
@@ -37,7 +36,7 @@ public class InputCheck implements IInputCheck {
 	}
 
 	@Override
-	public void setLisener_float(Button button, final String point) {
+	public void setLisener_float(View button, final String point) {
 		// TODO Auto-generated method stub
 		// this.number = point;
 		/**
@@ -83,7 +82,7 @@ public class InputCheck implements IInputCheck {
 	}
 
 	@Override
-	public void setLisener_clear(Button button) {
+	public void setLisener_clear(View button) {
 		// TODO Auto-generated method stub
 		/**
 		 * 按钮C的事件

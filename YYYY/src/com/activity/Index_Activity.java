@@ -5,44 +5,31 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import org.apache.http.impl.conn.SingleClientConnManager;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//import com.yyyy.yyyy.Index_Activity.MyAdapter;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.LocalActivityManager;
-import android.content.Context;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTitleStrip;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.dao.DataBase;
 import com.dao.JZ_DAO;
 import com.dao.basic.BasicDAO;
 import com.inteface.IBasicDAO;
 import com.logic.BackgroundColor;
 import com.logic.Index_ContorlHelper;
+import com.model.cloud.CloudMessageManager;
 import com.model.user.Init;
 import com.yyyy.yyyy.R;
+
+//import org.apache.http.impl.conn.SingleClientConnManager;
+//import com.yyyy.yyyy.Index_Activity.MyAdapter;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.LocalActivityManager;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.PagerTitleStrip;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
 @SuppressWarnings("deprecation")
 @SuppressLint("InflateParams")
@@ -58,8 +45,6 @@ public class Index_Activity extends Activity {
 	public static float remain;//剩余预算
 	public static float budget;//总预算
 	LocalActivityManager manager = null;
-	public static DataBase dataBase;// 打开数据库
-	public static SQLiteDatabase db;//打开数据库连接
 	public static IBasicDAO basicDAO = null;
 	static int SIGN = 0;//第一次启动，SIGN = 0;标志位
 	int current = 0;
@@ -69,9 +54,16 @@ public class Index_Activity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (db != null) {
-			db.close();// SQLiteDatabase sqldb;
+		basicDAO.closeDB();//关闭数据库
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return true;
 		}
+		return super.onKeyDown(keyCode, event);
+
 	}
 	
 	@Override
@@ -95,14 +87,12 @@ public class Index_Activity extends Activity {
 		context = Index_Activity.this;
 		indexActivity = this;
 		manager = new LocalActivityManager(this, true);
-//		dataBase = new DataBase(Index_Activity.this, "user.db");
-//		db = dataBase.getWritableDatabase();
 		basicDAO = new BasicDAO();
-		basicDAO.connectDataBase("user.db");
-		
+		basicDAO.connectDataBase("");
 		manager.dispatchCreate(savedInstanceState);
+		
 		// 获得监听对象
-		index_ContorlHelper = new Index_ContorlHelper(Index_Activity.this, dataBase);
+		index_ContorlHelper = new Index_ContorlHelper(Index_Activity.this);
 		// 获得viewPager
 		viewPager = (ViewPager) this.findViewById(R.id.viewpager);
 
@@ -124,6 +114,11 @@ public class Index_Activity extends Activity {
 		//第一次启动更新记账界面预算显示
 		JZ_DAO jz_DataBaseHelper = new JZ_DAO();
 		jz_DataBaseHelper.updateBudgetRemain();
+		
+		//请求是否有推送消息
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE); 
+		CloudMessageManager manager1 = new CloudMessageManager();
+		manager1.getMessage(mNotificationManager);
 		
 		viewPager.setAdapter(new MyAdapter());
 		try {

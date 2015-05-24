@@ -1,0 +1,136 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="@string/add_borrow_item"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <!-- 输入对方昵称 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/friend_name"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/add_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="@string/additem"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/friend_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:hint="请输入对方昵称" />
+    </LinearLayout>
+    <!-- 输入金额 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/borrow_money"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/borrow_money"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="请输入借贷金额" />
+    </LinearLayout>
+    <!-- 归还期限 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/back_date"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/back_time"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="点击设置归还时间" />
+    </LinearLayout>
+
+    <!-- 描述 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/descripe"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/descripe"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="在此可以添加备注" />
+    </LinearLayout>
+    <!-- 定位 -->
+
+    <TextView
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_gravity="right"
+        android:background="@drawable/location"
+        android:textSize="30sp" />
+
+    <TextView
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/ok"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:background="@drawable/button"
+        android:text="@string/ok" />
+
+</LinearLayout>

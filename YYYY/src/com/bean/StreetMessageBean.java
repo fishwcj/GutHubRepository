@@ -7,7 +7,7 @@ public class StreetMessageBean implements Serializable  {
 	 * –Ú¡–ªØ¿‡
 	 */
 	private static final long serialVersionUID = 1L;
-	private String messageId;
+	private int messageId;
 	private String address;
 	private String userName;
 	private String message;
@@ -41,11 +41,11 @@ public class StreetMessageBean implements Serializable  {
 		this.datetime = datetime;
 	}
 	
-	public String getMessageId() {
+	public int getMessageId() {
 		return messageId;
 	}
 	
-	public void setMessageId(String messageId) {
+	public void setMessageId(int messageId) {
 		this.messageId = messageId;
 	}
 	

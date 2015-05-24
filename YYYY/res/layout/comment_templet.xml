@@ -8,11 +8,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/core"
-        android:layout_marginTop="10dp"
+        android:layout_height="110dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/core"
         android:orientation="vertical" >
 
         <!-- 头像栏 -->
@@ -30,6 +30,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:background="#FF0000" />
 
@@ -40,22 +41,27 @@
                 android:layout_weight="6"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:textSize="15sp"
                 android:text="某攒友" />
         </LinearLayout>
-<!-- 内容 -->
+        <!-- 内容 -->
+
         <TextView
             android:id="@+id/content_c"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="这是评论"
-            android:textSize="15sp" />
+            android:layout_marginTop="5dp"
+            android:layout_weight="1.6"
+            android:paddingLeft="5dp"
+            android:textSize="12sp"
+            android:text="这是评论" />
         <!-- 底部栏 -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:orientation="horizontal" >
 
@@ -65,7 +71,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="2115-08-09 08:09" />
+                android:textColor="#C5C1AA"
+                android:text="2015-08-09 08:09" />
 
             <TextView
                 android:id="@+id/repet"
@@ -73,7 +80,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:clickable="true"
-                android:gravity="center"
+                android:gravity="right"
+                android:paddingRight="20dp"
+                android:textColor="#3A5FCD"
                 android:text="回复" />
         </LinearLayout>
     </LinearLayout>

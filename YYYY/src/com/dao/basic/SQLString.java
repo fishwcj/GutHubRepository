@@ -43,23 +43,31 @@ public class SQLString {
 		return sql;
 	}
 
-	public static String getSearchBudget_Sy(String datetime) {
-		String sql = "select * from tabletotalbudget where month = '"
-				+ datetime + "'";
+	public static String getSearchBudget_Sy() {
+		String sql = "select * from tabletotalbudget";
 		return sql;
 	}
 
-	public static String getSearchincome_Sy(String datetime) {
-		String sql = "select * from consumein where month = '" + datetime + "'";
+	public static String getSearchincome_Sy() {
+		String sql = "select * from consumein";
 		return sql;
 	}
 
-	public static String getSearchBudgetByKind_Sy(String datetime) {
-		String sql = "select * from tablebudget where month = '" + datetime
-				+ "'";
+	public static String getSearchBudgetByKind_Sy() {
+		String sql = "select * from tablebudget";
 		return sql;
 	}
 
+	public static String getSearchTime_Sy(){
+		String sql = "select * from time";
+		return sql;
+	}
+	
+	public static String getSearchKind_Sy(){
+		String sql = "select * from kind";
+		return sql;
+	}
+	
 	public static String getSytime_Sy() {
 		String sql = "select sytime from time";
 		return sql;
@@ -73,21 +81,50 @@ public class SQLString {
 	/*
 	 * TJ_DAO
 	 */
-	public static String getConsume_Tj() {
-		String sql = "select totalbudget-remain as total_consume from tabletotalbudget";
+	// 获取总的已经花的钱
+	public static String getTotalConsumeString(String date) {
+		
+		String sql = "select totalbudget-remain as total_consume from tabletotalbudget where month ='"
+				+ date + "'";
 		return sql;
 	}
 
-	public static String getConsume1_Tj() {
-		String sql = "select budget-remain as sum_consume from tablebudget ";
+	// 获取每一类别的总的花过的钱数
+	public static String getTypeConsumeString(String date) {
+		
+		String sql = "select budget-remain as sum_consume from tablebudget where month = '"
+				+ date + "'";
 		return sql;
 	}
 
-	public static String getConsume_Tj(String type) {
-		String sql = "select consume from test1 where kind = '" + type
-				+ "' order by date asc";
+	// 获取每一天的某一类别的已花钱数，作为折线图的纵坐标
+	public static String getDayTypeConsumeString(int type, String date) {
+		
+		String sql = "select sum(consume)  as totoalConsume from stream where id = "
+				+ type
+				+ " and date >= '"
+				+ date
+				+ "-01"
+				+ "' and date <= date('"
+				+ date
+				+ "-01','+1 month') group by strftime('%d',date)";
+
 		return sql;
 	}
+
+	// 获取花钱的日期，作为折线图的横坐标
+	public static String getDayString(int type, String date) {
+		
+		String sql = "select distinct strftime('%d',date)  as day from stream where id = "
+				+ type
+				+ " and date >= '"
+				+ date
+				+ "-01"
+				+ "' and date <= date('" + date + "-01','+1 month')";
+
+		return sql;
+	}
+
 
 	/*
 	 * YS_DAO
@@ -183,6 +220,57 @@ public class SQLString {
 		return sql;
 	}
 
+	public static String getHasTarget_Is() {
+		String sql = "select * from target";
+		return sql;
+	}
+
+	public static String getInitTarget_Is(String name, int time, String content) {// 第一次设置攒钱目标初始化
+		String sql = "insert into target(name,time,lefttime,content,tips,advise) values('"
+				+ name
+				+ "',"
+				+ time
+				+ ",-1,'"
+				+ content
+				+ "','刚刚设置目标，消费数据智能分析中，一周后来看结果吧~','坚持就是胜利，要想获得精准结果，要每天坚持记录哦！')";
+		return sql;
+	}
+
+	public static String getTarget_Is() {
+		String sql = "select * from target";
+		return sql;
+	}
+
+	public static String getUpdateTargetName_Is(String name) {
+		String sql = "update target set name = '" + name + "'";
+		return sql;
+	}
+
+	public static String getUpdateTargetContent_Is(String content) {
+		String sql = "update target set content = '" + content + "'";
+		return sql;
+	}
+
+	public static String getUpdateTargetLeftTime_Is(int lefttime) {
+		String sql = "update target set lefttime = " + lefttime;
+		return sql;
+	}
+
+	public static String getUpdateTargetAdvise_Is(String advise) {
+		String sql = "update target set advise = '" + advise + "'";
+		return sql;
+	}
+
+	public static String getUpdateTargetTips_Is(String tips) {
+		String sql = "update target set tips = '" + tips + "'";
+		return sql;
+	}
+	
+	public static String getUpdateTarget_Is(String name, String content, int time) {
+		String sql = "update target set name = '" + name + "',time = " + time + ",content = '" + content + "'";
+		return sql;
+	}
+	
 	/*
 	 * Regist
 	 */
@@ -213,9 +301,98 @@ public class SQLString {
 		String sql = "select * from user";
 		return sql;
 	}
-	
-	public static String getFreshButton_Co(int mainkind){
+
+	public static String getFreshButton_Co(int mainkind) {
 		String sql = "select kindname from kind where firstid = " + mainkind;
 		return sql;
 	}
+	
+	public static String getInitStream(float comsume,String kind,int id,String date,int inorout){
+		String sql = "insert into stream values(" + comsume + ",'" + kind + "'," + id + ",'" + date + "," + inorout + ")";
+		return sql;
+	}
+	
+	public static String getInitTablebudget(float budget, int kind, float remain,String month){
+		String sql = "insert into tablebudget values(" + budget + "," + kind + "," + remain + ",'" + month + "'";
+		return sql;
+	}
+	
+	public static String getInitTabletotalbudget( float totalbudget, float remain,String month){
+		String sql = "insert into tabletotalbudget values(" + totalbudget + "," + remain + ",'" + month + "')";
+		return sql;
+	}
+	
+	public static String getInitConsumein( float mony,String month){
+		String sql = "insert into consumein values(" + mony + ",'" + month + "')";
+		return sql;
+	}
+	
+	public static String getInitTime(String lastdate, String sytime){
+		String sql = "insert into time values('" + lastdate + "','" + sytime + "')";
+		return sql;
+	}
+	
+	public static String getInitKind( int firstid, int secondid, String kindname){
+		String sql = "insert into kind values(" + firstid + "," + secondid + ",'" + kindname + "')";
+		return sql;
+	}
+	
+	public static String getInitTarget(String name,int time,int lefttime,String content,String tips,String advise){
+		String sql = "insert into target values ('" + name + "'," + time + "," + lefttime + ",'" + content + "','" + tips + "','" + advise + "')";
+		return sql;
+	}
+	
+	public static String getInitUser(String id,String name){
+		String sql = "insert into user values ('" + id + "','" + name + "',1)";
+		return sql;
+	}
+	
+	public static String getInit(){
+		String sql = "delete from tablebudget;delete from tabletotalbudget;delete from consumein;delete from time;delete from user;delete from kind;";
+		return sql;
+	}
+	
+	/*
+	 * Kind_Dao
+	 */
+	public static String getFirstKindName_Ki(int firstid){
+		String sql = "select name from firstkind where id = " + firstid;
+		return sql;
+	}
+	
+	public static String getMaxId(int firstid){
+		String sql = "select max(secondid) from kind where firstid = " + firstid;
+		return sql;
+	}
+	
+	public static String getInsertNewKind(int firstid,int secondid, String name){
+		String sql = "insert into kind(firstid,secondid,kindname) values (" + firstid + "," + secondid + ",'" + name + "')";
+		return sql;
+	}
+	
+	public static String getChilds(int firstid){
+		String sql = "select * from kind where firstid = " +  firstid;
+		return sql;
+	}
+	
+	public static String getDelete(int firstid, int secondid){
+		String sql = "delete from kind where firstid = " + firstid + " and secondid = " + secondid;
+		return sql;
+	}
+	
+	/**
+	 * Borrow_Return Manager
+	 * @author LLL
+	 * @return
+	 */
+	
+	public static String getTotal(int kind){
+		String sql = "select sum(money) as totalborrow from borrow_manager where kind = "+kind; 
+		return sql;
+	}
+	public static String  getList(int kind) {
+		String sql = "select userId,money,return_time from borrow_manager where kind = "+kind;
+		return sql;
+	}
+
 }
