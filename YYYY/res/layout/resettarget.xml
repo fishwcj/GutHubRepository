@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#436EEE"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="我的目标我的菜"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+        </LinearLayout>
+    <!-- 第一排 -->
+
+    <TextView
+        android:id="@+id/clk_name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/title_core1"
+        android:gravity="center"
+        android:text="点我修改目标名字"
+        android:clickable="true"
+        android:textColor="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/_target_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp" 
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/title_core2"
+        android:gravity="center"
+        android:text="额，完成期限不允许修改！"
+        android:textColor="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/_target_time"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:focusable="false"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/clk_content"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/title_core"
+        android:gravity="center"
+        android:text="立下你的军令状！"
+        android:clickable="true"
+        android:textColor="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/_target_content"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:gravity="top" />
+    
+    <TextView
+        android:id="@+id/_target_ok"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/title_core2"
+        android:gravity="center"
+        android:clickable="true"
+        android:text="完成修改"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

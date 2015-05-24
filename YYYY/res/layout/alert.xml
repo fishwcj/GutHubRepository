@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/l" />
+        <!-- 下大部分 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:orientation="horizontal" >
+
+            <!-- 一级菜单 -->
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/spjs"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/spjs" />
+
+                    <TextView
+                        android:id="@+id/yfsp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/yfsp" />
+
+                    <TextView
+                        android:id="@+id/cxjt"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/cxjt" />
+
+                    <TextView
+                        android:id="@+id/jjxf"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/jjxf" />
+
+                    <TextView
+                        android:id="@+id/xxjx"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/xxjx" />
+
+                    <TextView
+                        android:id="@+id/xxyl"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/xxyl" />
+
+                    <TextView
+                        android:id="@+id/rjjw"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/rjjw" />
+
+                    <TextView
+                        android:id="@+id/ylbj"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/ylbj" />
+
+                    <TextView
+                        android:id="@+id/qtzx"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/qtzx" />
+                </LinearLayout>
+            </ScrollView>
+
+            <!-- 二级菜单 -->
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/two"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/zdy"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blackbutton"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="自定义" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,19 +1,25 @@
 package com.activity;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dao.JZ_DAO;
+import com.dao.basic.BasicDAO;
+import com.inteface.IBasicDAO;
+import com.logic.BackgroundColor;
+import com.logic.Index_ContorlHelper;
+import com.model.cloud.CloudMessageManager;
+import com.model.user.Init;
+import com.yyyy.yyyy.R;
+
 //import org.apache.http.impl.conn.SingleClientConnManager;
-
-
-
-
-
 //import com.yyyy.yyyy.Index_Activity.MyAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.LocalActivityManager;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,14 +27,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.dao.DataBase;
-import com.dao.JZ_DataBaseHelper;
-import com.model.Index_ContorlHelper;
-import com.model.Init;
-import com.yyyy.yyyy.R;
 
 @SuppressWarnings("deprecation")
 @SuppressLint("InflateParams")
@@ -41,23 +42,39 @@ public class Index_Activity extends Activity {
 	private PagerTitleStrip pagerTitleStrip;
 	private List<View> views;
 	public static Activity indexActivity;
+	public static float remain;//剩余预算
+	public static float budget;//总预算
 	LocalActivityManager manager = null;
-	// 打开数据库
-	DataBase dataBase;
-	
-	//第一次启动，SIGN = 0;标志位
-	static int SIGN = 0;
+	public static IBasicDAO basicDAO = null;
+	static int SIGN = 0;//第一次启动，SIGN = 0;标志位
 	int current = 0;
 	int passed = -1;
 	Index_ContorlHelper index_ContorlHelper;
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		basicDAO.closeDB();//关闭数据库
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+
+	}
+	
+	@Override
 	protected void onResume() {
 		super.onResume();
 		if (SIGN != 0) {
 			//更新记账界面预算显示
-			JZ_DataBaseHelper jz_DataBaseHelper = new JZ_DataBaseHelper();
-			jz_DataBaseHelper.updateBudgetRemain(dataBase);
+			JZ_DAO jz_DataBaseHelper = new JZ_DAO();
+			jz_DataBaseHelper.updateBudgetRemain();
+			BackgroundColor backgroundColor = new BackgroundColor();
+			backgroundColor.refreshback();
 			System.out.println("调用了resum");
 		}
 		SIGN++;
@@ -70,23 +87,16 @@ public class Index_Activity extends Activity {
 		context = Index_Activity.this;
 		indexActivity = this;
 		manager = new LocalActivityManager(this, true);
-		dataBase = new DataBase(Index_Activity.this, "user.db");
+		basicDAO = new BasicDAO();
+		basicDAO.connectDataBase("");
 		manager.dispatchCreate(savedInstanceState);
+		
 		// 获得监听对象
-		index_ContorlHelper = new Index_ContorlHelper(Index_Activity.this, dataBase);
-//		context = Index_Activity.this;
+		index_ContorlHelper = new Index_ContorlHelper(Index_Activity.this);
 		// 获得viewPager
 		viewPager = (ViewPager) this.findViewById(R.id.viewpager);
 
 		views = new ArrayList<View>();
-
-		Intent intent_streetIntent = new Intent(context, Street_Activity.class);
-		intent_streetIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		views.add(getView("Street_Activity", intent_streetIntent));
-
-		Intent intent_countIntent = new Intent(context, Count_Activity.class);
-		intent_countIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		views.add(getView("Count_Activity", intent_countIntent));
 
 		Intent intent_jzIntent = new Intent(context, JZ_Activity.class);
 		intent_jzIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -96,10 +106,24 @@ public class Index_Activity extends Activity {
 		intent_streamIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		View streamView = getView("Stream_Activity", intent_streamIntent);
 		views.add(streamView);
+		
+		Intent intent_countIntent = new Intent(context, Count_Activity.class);
+		intent_countIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		views.add(getView("Count_Activity", intent_countIntent));
+		
+		//第一次启动更新记账界面预算显示
+		JZ_DAO jz_DataBaseHelper = new JZ_DAO();
+		jz_DataBaseHelper.updateBudgetRemain();
+		
+		//请求是否有推送消息
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE); 
+		CloudMessageManager manager1 = new CloudMessageManager();
+		manager1.getMessage(mNotificationManager);
+		
 		viewPager.setAdapter(new MyAdapter());
 		try {
 			@SuppressWarnings("unused")
-			Init init = new Init(context);
+			Init init = new Init();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			System.out.println("初始化报错");
@@ -134,6 +158,14 @@ public class Index_Activity extends Activity {
 				// TODO Auto-generated method stub
 			}
 		});
+		//更新界面颜色
+		BackgroundColor backgroundColor = new BackgroundColor();
+		backgroundColor.refreshback();
+		//更新消费
+		String consumed = new DecimalFormat("0.0").format(budget - remain);
+		System.out.println("格式化之后的浮点数" + consumed);
+		JZ_Activity.consumed.setText(consumed);
+		
 	}
 
 	private View getView(String id, Intent intent) {

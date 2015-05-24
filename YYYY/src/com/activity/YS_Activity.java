@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.LocalActivityManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -21,10 +20,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
-
-import com.dao.DataBase;
-import com.dao.YS_DataBaseHelper;
-import com.model.Index_ContorlHelper;
+import com.dao.YS_DAO;
+import com.logic.BackgroundColor;
 import com.yyyy.yyyy.R;
 
 @SuppressLint("NewApi")
@@ -43,10 +40,11 @@ public class YS_Activity extends Activity {
 	private TextView show_eat;
 	private RadioButton house;
 	private TextView show_house;
+	@SuppressWarnings("unused")
 	private RadioButton walk;
 	private TextView show_walk;
 	private ArrayList<TextView> show_list;// 单项预算的显示
-	private TextView item_view;// 自预算的显示view
+//	private TextView item_view;// 自预算的显示view
 	private RadioButton rb;
 	// 键盘
 	private Button number_1;
@@ -78,10 +76,9 @@ public class YS_Activity extends Activity {
 	private float budget[] = { 0 , 0 ,0 , 0};
 
 	private ArrayList<Integer> kind_list = new ArrayList<Integer>();
-	private YS_DataBaseHelper yS_handler;
+	private YS_DAO yS_handler;
 	private Cursor cursor;
 	// private int i = 0;
-	DataBase dataBase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -152,8 +149,7 @@ public class YS_Activity extends Activity {
 		kind_list.add(2);
 		kind_list.add(3);
 		kind_list.add(4);
-		dataBase = new DataBase(YS_Activity.this, "user.db");
-		yS_handler = new YS_DataBaseHelper(YS_Activity.this, dataBase);
+		yS_handler = new YS_DAO();
 		// 从数据库中获取每种类型的预算值
 		cursor = yS_handler.read_budget();
 		// 读取游标的索引
@@ -424,8 +420,7 @@ public class YS_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// 首先插入到数据库，再结束此activity
-				YS_DataBaseHelper ysHelper = new YS_DataBaseHelper(
-						YS_Activity.this, dataBase);
+				YS_DAO ysHelper = new YS_DAO();
 				// 得到有多少个类别
 				int numberOfKind = show_list.size();
 				float[] budget = new float[numberOfKind];
@@ -436,10 +431,14 @@ public class YS_Activity extends Activity {
 							.toString());
 					kind[i] = kind_list.get(i);
 				}
+				Index_Activity.remain += ys_total - Index_Activity.budget;
+				Index_Activity.budget = ys_total;
 				// 如果保存到数据库成功则结束此activity(保存总预算和分预算)
 				if (ysHelper.add(budget, kind) && ysHelper.addtotal(ys_total)) {
 					YS_Activity.this.finish();
 				}
+				BackgroundColor backgroundColor = new BackgroundColor();
+				backgroundColor.refreshback();
 			}
 		});
 	}

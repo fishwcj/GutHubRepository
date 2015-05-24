@@ -1,14 +1,18 @@
 package com.model;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import junit.framework.Test;
+
+import com.activity.Count_Activity;
 import com.activity.Index_Activity;
 import com.activity.JZ_Activity;
 import com.activity.Stream_Activity;
 import com.dao.DataBase;
-import com.dao.JZ_DataBaseHelper;
-import com.dao.LS_DataBaseHelper;
+import com.dao.JZ_DAO;
+import com.dao.LS_DAO;
 import com.yyyy.yyyy.R;
 
 import android.annotation.SuppressLint;
@@ -23,17 +27,21 @@ import android.graphics.drawable.Drawable;
 import android.text.GetChars;
 import android.text.Html;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressWarnings({ "deprecation", "unused" })
 public class Index_ContorlHelper {
 	private DataBase dataBase;
 	private String currentString;// 当前日期
 	Context context;
+	LinearLayout[][] linearLayoutChild;
+	int i = 0;
 
 	/**
 	 * 构造函数，得到LocalActivityManager和DataBase
@@ -58,11 +66,22 @@ public class Index_ContorlHelper {
 	 * @param passed
 	 */
 	public void getDecide(int current, int passed) {
-		if (current == 3 || passed == 3) { // 流水
-			updateStreamUI(current);
+		if (current == 1 || passed == 1) { // 流水
+//			getFrameOfThisYear();
+			 updateStreamUI(current);
 		}
-		if (current == 2) { // 记账,不能用else if
+		if (current == 0) { // 记账,不能用else if
 			updatejzUI();
+		}
+		/*
+		 * author LLL 
+		 * content:统计 
+		 * time:4.18
+		 * 将pieView、TJ_DrawHelper、ViewBase放在了model包中
+		 */
+		if (current == 2) {
+			// 画图函数;
+			draw_TJ();
 		}
 	}
 
@@ -75,11 +94,16 @@ public class Index_ContorlHelper {
 		LinearLayout linearLayout = (LinearLayout) Stream_Activity.streamActivity
 				.findViewById(R.id.lin);
 		// 滑动到流水界面，更新
-		if (current == 3) {
-			LS_DataBaseHelper ls_DataBaseHelper = new LS_DataBaseHelper(
-					context, dataBase);
+		if (current == 1) {
+			LS_DAO ls_DataBaseHelper = new LS_DAO(
+					context);
 			LSManager lsManager = new LSManager(ls_DataBaseHelper);
-			lsManager.updateStreamLayout(linearLayout);
+			
+			String[] jString = currentString.split("-");
+			int number = Integer.parseInt(jString[1]);// 得到当前月数
+			System.out.println("当前月数：" + number);
+
+			lsManager.getFrame(number);
 		}
 		// 滑出流水界面,清除流水界面
 		else {
@@ -91,7 +115,30 @@ public class Index_ContorlHelper {
 	 * 处理记账界面
 	 */
 	private void updatejzUI() {
-		JZ_DataBaseHelper jz_DataBaseHelper = new JZ_DataBaseHelper();
-		jz_DataBaseHelper.updateBudgetRemain(dataBase);
+		JZ_DAO jz_DataBaseHelper = new JZ_DAO();
+		jz_DataBaseHelper.updateBudgetRemain();
+	}
+	
+	/*
+	 * 画统计图
+	 */
+	private void draw_TJ() {
+		Activity count_Activity = Count_Activity.countActivity;
+		LinearLayout pieViewLayout = (LinearLayout) count_Activity
+				.findViewById(R.id.pieView1);
+		TJ_DrawPieHelper drawHelper = new TJ_DrawPieHelper(count_Activity);
+		PieView pieView = drawHelper.Draw();
+		if (pieView.percent[0] == 0) {
+			Toast.makeText(count_Activity, "没有消费记录", Toast.LENGTH_SHORT).show();
+		} else {
+			if (pieViewLayout != null) {
+				pieViewLayout.removeAllViews();// 先清楚原来的图				
+			}
+			LayoutParams show = new LayoutParams(LayoutParams.WRAP_CONTENT,
+					500);// 确定
+			// 画布大小
+			pieViewLayout.addView(pieView, show);// 将上图作为子布局加入到父布局中
+		}
+
 	}
 }

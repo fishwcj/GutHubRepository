@@ -6,6 +6,7 @@ import java.util.Date;
 
 //import com.activity.JZ_Activity;
 
+
 import android.annotation.SuppressLint;
 //import android.content.Context;
 import android.database.Cursor;
@@ -21,8 +22,20 @@ public class SearchCloudData {
 	public SearchCloudData(DataBase dataBase){
 		db = dataBase.getWritableDatabase();
 	}
-	
-	
+
+	/**
+	 * 得到id
+	 * @return
+	 */
+	public String searchId(){
+		String id = "";
+		sql = "select id from user";
+		cursor = db.rawQuery(sql, null);
+		if(cursor.moveToNext()){
+			id = cursor.getString(1);
+		}
+		return id;
+	}
 	/**
 	 * 查询得到新增流水
 	 * @param time	上次同步的时间
@@ -32,6 +45,8 @@ public class SearchCloudData {
 		String time = getLastsytime();
 		sql = "select * from test1 where date > '" + time + "'";
 		cursor = db.rawQuery(sql, null);
+		int i = cursor.getCount();
+		System.out.println("新增流水:" + i );
 		return cursor;
 	}
 	
@@ -93,6 +108,7 @@ public class SearchCloudData {
 		if(cursor.moveToNext()){
 			last = cursor.getString(cursor.getColumnIndex("sytime"));
 		}
+		System.out.println("上一次同步时间" + last);
 		return last;
 	}
 	
@@ -100,7 +116,13 @@ public class SearchCloudData {
 	/**
 	 * 每次同步之后更新时间表
 	 */
+	@SuppressLint("SimpleDateFormat")
 	public void updateTime(){
-		
+		java.util.Date currentDate = new java.util.Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String currenString = format.format(currentDate);
+		System.out.println("现在更新同步时间" + currenString);
+		sql = "update time set sytime = '" + currenString + "'";
+		db.execSQL(sql);
 	}
 }
